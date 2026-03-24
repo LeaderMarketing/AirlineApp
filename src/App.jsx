@@ -747,35 +747,107 @@ const DisruptionScreen = ({ setScreen }) => {
 
 // ─── TRIP WRAP ───────────────────────────────────────────────────
 const WrapScreen = () => {
-  const monthData = [3,1,2,0,1,3,2,1,2,1,0,1]; const maxM = Math.max(...monthData);
+  const monthData = [3,1,2,0,1,3,2,1,2,1,0,1];
+  const maxM = Math.max(...monthData);
+  const [activeMonth, setActiveMonth] = useState(null);
+  const monthRoutes = ["ADL-SYD x2, ADL-NRT","SYD-MEL","ADL-SIN, SIN-ADL","","SYD-BKK","ADL-NRT, NRT-ADL, ADL-SYD","SYD-SIN, SIN-SYD","ADL-SYD","ADL-NRT, NRT-KIX","SYD-MEL","","ADL-SYD"];
+
   return (
     <div style={{ padding: "0 20px 24px" }}>
-      <div className="s1" style={{ padding: "6px 0 4px", textAlign: "center" }}>
-        <Pill color={T.accent} style={{ marginBottom: 8 }}><Icons.Sparkle /> Year in Review</Pill>
-        <h1 style={{ fontSize: 30, fontWeight: 800, color: T.text, fontFamily: fam, marginTop: 10 }}>Your 2026 Trip Wrap</h1>
-        <p style={{ fontSize: 14, color: T.textMuted, marginTop: 6 }}>Here's how you travelled this year</p>
+      {/* Gradient header */}
+      <div className="s1" style={{ margin: "0 -20px", padding: "24px 20px 32px", background: "linear-gradient(135deg, #E1081F, #E86831)", borderRadius: "0 0 24px 24px", textAlign: "center", marginBottom: 24 }}>
+        <Pill color="#fff" style={{ background: "rgba(255,255,255,0.2)" }}><Icons.Sparkle /> Year in Review</Pill>
+        <h1 style={{ fontSize: 30, fontWeight: 800, color: "#fff", fontFamily: fam, marginTop: 10 }}>Your 2026 Trip Wrap</h1>
+        <p style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", marginTop: 6 }}>Here's how you travelled this year</p>
       </div>
-      <div className="s2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 24 }}>
-        {[{ l: "Flights", v: "12", s: "this year" }, { l: "Distance", v: "47,800", s: "km traveled" }, { l: "Countries", v: "6", s: "visited" }, { l: "CO₂ Offset", v: "78%", s: "of emissions" }].map((st, i) => (
+
+      {/* Stats grid */}
+      <div className="s2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+        {[
+          { l: "Flights", v: "12", s: "this year" },
+          { l: "Distance", v: "47,800", s: "km traveled" },
+          { l: "Countries", v: "6", s: "visited" },
+          { l: "Hours in air", v: "127", s: "hours total" },
+        ].map((st, i) => (
           <Card key={i} style={{ textAlign: "center", padding: "22px 12px" }}>
-            <p style={{ fontSize: 34, fontWeight: 800, color: T.accent, fontFamily: fontMono, animation: `countUp 0.6s ease both ${0.1*i}s` }}>{st.v}</p>
+            <p style={{ fontSize: 34, fontWeight: 800, color: T.accent, fontFamily: fontMono, animation: `countUp 0.6s ease both ${0.15*i}s` }}>{st.v}</p>
             <p style={{ fontSize: 14, fontWeight: 600, color: T.text, marginTop: 6 }}>{st.l}</p>
             <p style={{ fontSize: 11, color: T.textMuted }}>{st.s}</p>
           </Card>
         ))}
       </div>
-      <Card className="s3" style={{ marginTop: 20, padding: 22 }}>
+
+      {/* Milestone cards */}
+      <div className="s3" style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>
+        {[
+          { icon: <Icons.Plane />, label: "Longest flight", value: "ADL → LHR · 22h 15m" },
+          { icon: <Icons.Star />, label: "Most visited", value: "Tokyo · 3 trips" },
+          { icon: <Icons.Ticket filled={false} />, label: "Favourite seat", value: "Window · 83% of flights" },
+        ].map((m, i) => (
+          <Card key={i} style={{ padding: "16px 18px", display: "flex", alignItems: "center", gap: 14 }}>
+            <div style={{ width: 38, height: 38, borderRadius: 19, background: T.accentSoft, display: "flex", alignItems: "center", justifyContent: "center", color: T.accent }}>{m.icon}</div>
+            <div>
+              <p style={{ fontSize: 12, color: T.textMuted, fontWeight: 500 }}>{m.label}</p>
+              <p style={{ fontSize: 15, fontWeight: 600, color: T.text, marginTop: 2 }}>{m.value}</p>
+            </div>
+          </Card>
+        ))}
+      </div>
+
+      {/* Interactive bar chart */}
+      <Card className="s4" style={{ marginTop: 20, padding: 22 }}>
         <h3 style={{ fontSize: 16, fontWeight: 600, color: T.text, marginBottom: 16 }}>Flights per month</h3>
-        <div style={{ display: "flex", alignItems: "flex-end", gap: 6, height: 80 }}>
+        <div style={{ display: "flex", alignItems: "flex-end", gap: 6, height: 80, position: "relative" }}>
           {monthData.map((v, i) => (
-            <div key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
-              <div style={{ width: "100%", borderRadius: 4, height: maxM > 0 ? `${(v/maxM)*60}px` : 0, minHeight: v > 0 ? 8 : 2, background: v > 0 ? T.accent : "#E5E5EA", transformOrigin: "bottom", animation: `barGrow 0.6s ease both ${0.05*i}s` }}/>
-              <span style={{ fontSize: 9, color: T.textMuted, fontWeight: 500 }}>{"JFMAMJJASOND"[i]}</span>
+            <div key={i} onClick={() => v > 0 && setActiveMonth(activeMonth === i ? null : i)} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 4, cursor: v > 0 ? "pointer" : "default" }}>
+              <div style={{ width: "100%", borderRadius: 4, height: maxM > 0 ? `${(v/maxM)*60}px` : 0, minHeight: v > 0 ? 8 : 2, background: activeMonth === i ? T.accentDark : v > 0 ? T.accent : "#E5E5EA", transformOrigin: "bottom", animation: `barGrow 0.6s ease both ${0.05*i}s`, transition: "background 0.2s" }}/>
+              <span style={{ fontSize: 9, color: activeMonth === i ? T.accent : T.textMuted, fontWeight: activeMonth === i ? 700 : 500 }}>{"JFMAMJJASOND"[i]}</span>
             </div>
           ))}
         </div>
+        {activeMonth !== null && monthData[activeMonth] > 0 && (
+          <div style={{ marginTop: 12, padding: "10px 14px", borderRadius: T.radiusSm, background: T.surfaceAlt, animation: "fadeIn 0.2s ease-out both" }}>
+            <p style={{ fontSize: 12, color: T.textSecondary }}>{monthRoutes[activeMonth]}</p>
+          </div>
+        )}
       </Card>
-      <div className="s4" style={{ marginTop: 20 }}>
+
+      {/* Route map */}
+      <Card className="s5" style={{ marginTop: 20, padding: 0, overflow: "hidden" }}>
+        <div style={{ padding: "18px 22px 8px" }}>
+          <h3 style={{ fontSize: 16, fontWeight: 600, color: T.text }}>Your world</h3>
+        </div>
+        <svg viewBox="0 0 360 180" style={{ width: "100%", height: 160, padding: "0 16px 16px" }}>
+          {[[120,60],[140,55],[160,50],[180,45],[200,48],[220,55],[240,52],[260,58],[280,55],[300,60],[140,80],[160,78],[180,75],[200,72],[220,78],[240,85],[120,100],[140,95],[160,90],[180,88],[200,92],[240,100],[260,95],[280,105],[300,110],[100,120],[120,130],[140,125],[280,130],[300,125]].map(([x,y], i) => (
+            <circle key={i} cx={x} cy={y} r="1.5" fill="#E5E5EA"/>
+          ))}
+          {[
+            { x1: 138, y1: 125, x2: 155, y2: 90 },
+            { x1: 138, y1: 125, x2: 240, y2: 52 },
+            { x1: 155, y1: 90, x2: 210, y2: 72 },
+            { x1: 155, y1: 90, x2: 225, y2: 60 },
+          ].map((r, i) => {
+            const mx = (r.x1 + r.x2) / 2, my = Math.min(r.y1, r.y2) - 20;
+            return <path key={i} d={`M${r.x1},${r.y1} Q${mx},${my} ${r.x2},${r.y2}`} fill="none" stroke={T.accent} strokeWidth="1" opacity="0.5" strokeDasharray="3 3" style={{ animation: `fadeIn 0.5s ease both ${0.2*i}s` }}/>;
+          })}
+          {[
+            { x: 138, y: 125, label: "ADL" },
+            { x: 155, y: 90, label: "SYD" },
+            { x: 240, y: 52, label: "NRT" },
+            { x: 210, y: 72, label: "SIN" },
+            { x: 225, y: 60, label: "BKK" },
+            { x: 245, y: 55, label: "KIX" },
+          ].map((c, i) => (
+            <g key={i}>
+              <circle cx={c.x} cy={c.y} r="3" fill={T.accent} style={{ animation: `countUp 0.4s ease both ${0.1*i}s` }}/>
+              <text x={c.x} y={c.y - 7} textAnchor="middle" fontSize="7" fill={T.textSecondary} fontWeight="600">{c.label}</text>
+            </g>
+          ))}
+        </svg>
+      </Card>
+
+      {/* Top routes */}
+      <div className="s6" style={{ marginTop: 20 }}>
         <SectionTitle>Top routes</SectionTitle>
         <Card style={{ padding: 0, overflow: "hidden" }}>
           {[{ f: "ADL", t: "SYD", c: 4 }, { f: "ADL", t: "NRT", c: 3 }, { f: "SYD", t: "SIN", c: 2 }].map((r, i) => (
@@ -787,20 +859,44 @@ const WrapScreen = () => {
           ))}
         </Card>
       </div>
-      <Card className="s5" style={{ marginTop: 20, padding: 22 }}>
+
+      {/* Sustainability */}
+      <Card className="s7" style={{ marginTop: 20, padding: 22 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
           <span style={{ color: T.green }}><Icons.Leaf /></span>
           <h3 style={{ fontSize: 16, fontWeight: 600, color: T.text }}>Sustainability impact</h3>
         </div>
         <p style={{ fontSize: 14, color: T.textMuted, lineHeight: 1.5 }}>You offset <strong style={{ color: T.green }}>9.4 tonnes</strong> of CO₂ — equivalent to planting <strong style={{ color: T.green }}>47 trees</strong>.</p>
-        <div style={{ marginTop: 14, height: 6, borderRadius: 3, background: "#E5E5EA", overflow: "hidden" }}>
-          <div style={{ width: "78%", height: "100%", borderRadius: 3, background: `linear-gradient(90deg, ${T.green}, #5AC8FA)`, animation: "progressFill 1.5s ease both 0.3s" }}/>
+        <div style={{ display: "flex", gap: 3, marginTop: 14 }}>
+          {Array.from({ length: 10 }, (_, i) => (
+            <div key={i} style={{ flex: 1, height: 6, borderRadius: 3, background: i < 8 ? `linear-gradient(90deg, ${T.green}, #5AC8FA)` : "#E5E5EA", animation: `barGrow 0.4s ease both ${0.05*i}s`, transformOrigin: "left" }}/>
+          ))}
         </div>
-        <p style={{ fontSize: 12, color: T.textMuted, marginTop: 8 }}>78% of total emissions offset</p>
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 8 }}>
+          <p style={{ fontSize: 12, color: T.textMuted }}>78% of total emissions offset</p>
+          <p style={{ fontSize: 12, color: T.green, fontWeight: 600 }}>12% greener than 2025</p>
+        </div>
       </Card>
-      <button className="s6" style={{ width: "100%", marginTop: 20, padding: "16px", borderRadius: T.radiusSm, border: "none", background: T.accent, color: "#fff", fontSize: 16, fontWeight: 600, fontFamily: fam, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-        Share your Trip Wrap <Icons.ArrowRight />
-      </button>
+
+      {/* Shareable card preview */}
+      <div style={{ marginTop: 24 }}>
+        <SectionTitle>Share your wrap</SectionTitle>
+        <Card style={{ padding: 0, overflow: "hidden" }}>
+          <div style={{ padding: "24px 20px", background: "linear-gradient(135deg, #E1081F, #E86831)", color: "#fff", textAlign: "center" }}>
+            <svg width="28" height="20" viewBox="0 0 40 28" fill="#fff" style={{ marginBottom: 8 }}><path d="M20 0c-3 0-5.5 4-7 8l-1.5 4c-1.2 2.5-3 4.5-6 5.5-2 .8-4 .5-5-.5 2.5 3.5 5.5 4.5 8.5 3 2.5-1 4-3 5.5-5.5l1-2.5c1-2.5 2.5-5 4.5-5s3.5 2.5 4.5 5l1 2.5c1.5 2.5 3 4.5 5.5 5.5 3 1.5 6 .5 8.5-3-1 1-3 1.3-5 .5-3-1-4.8-3-6-5.5L26.5 8C25 4 22.5 0 20 0z"/></svg>
+            <p style={{ fontSize: 18, fontWeight: 800 }}>My 2026 Trip Wrap</p>
+            <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 14, fontSize: 13, fontWeight: 600 }}>
+              <span>12 Flights</span><span>6 Countries</span><span>47,800 km</span>
+            </div>
+          </div>
+          <div style={{ padding: 16, textAlign: "center" }}>
+            <p style={{ fontSize: 12, color: T.textMuted, marginBottom: 12 }}>Preview of your shareable card</p>
+            <button style={{ width: "100%", padding: "16px", height: 56, borderRadius: T.radius, border: "none", background: T.accent, color: "#fff", fontSize: 17, fontWeight: 500, fontFamily: fam, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+              Share your Trip Wrap <span style={{ color: "#fff" }}><Icons.ArrowRight /></span>
+            </button>
+          </div>
+        </Card>
+      </div>
     </div>
   );
 };
