@@ -127,14 +127,14 @@ const Card = ({ children, style, onClick, className }) => (
 const Pill = ({ children, color = T.accent, style }) => (
   <span style={{
     display: "inline-flex", alignItems: "center", gap: 4,
-    padding: "4px 10px", borderRadius: 20,
+    padding: "4px 12px", borderRadius: 20,
     background: color === T.green ? T.greenSoft : color === T.accent ? T.accentSoft : color === T.blue ? T.blueSoft : color === T.orange ? T.orangeSoft : color === T.red ? T.redSoft : `${color}15`,
     color, fontSize: 12, fontWeight: 600, ...style,
   }}>{children}</span>
 );
 
 const SectionTitle = ({ children, action, onAction }) => (
-  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14, padding: "0 2px" }}>
+  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16, padding: "0 2px" }}>
     <h2 style={{ fontSize: 20, fontWeight: 700, color: T.text, fontFamily: fam }}>{children}</h2>
     {action && <span onClick={onAction} style={{ fontSize: 14, color: T.accent, fontWeight: 600, cursor: "pointer" }}>{action}</span>}
   </div>
@@ -157,7 +157,7 @@ const HomeScreen = ({ setScreen }) => {
   return (
   <div style={{ padding: "0 20px 24px" }}>
     {/* Header */}
-    <div className="s1" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "6px 0 24px" }}>
+    <div className="s1" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 0 24px" }}>
       <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 16px 8px 12px", borderRadius: 24, border: `1px solid ${T.border}`, background: T.card }}>
         <Icons.Help />
         <span style={{ fontSize: 14, fontWeight: 500, color: T.textSecondary }}>Help</span>
@@ -176,23 +176,23 @@ const HomeScreen = ({ setScreen }) => {
     <h1 className="s1" style={{ fontSize: 32, fontWeight: 700, color: T.text, fontFamily: fam }}>{greeting}, Alex</h1>
 
     {/* Frequent Flyer CTA — matches Qantas style */}
-    <Card className="s2" style={{ marginTop: 20, padding: "28px 24px", textAlign: "center" }}>
-      <svg width="36" height="26" viewBox="0 0 40 28" fill={T.accent} style={{ marginBottom: 14 }}><path d="M20 0c-3 0-5.5 4-7 8l-1.5 4c-1.2 2.5-3 4.5-6 5.5-2 .8-4 .5-5-.5 2.5 3.5 5.5 4.5 8.5 3 2.5-1 4-3 5.5-5.5l1-2.5c1-2.5 2.5-5 4.5-5s3.5 2.5 4.5 5l1 2.5c1.5 2.5 3 4.5 5.5 5.5 3 1.5 6 .5 8.5-3-1 1-3 1.3-5 .5-3-1-4.8-3-6-5.5L26.5 8C25 4 22.5 0 20 0z"/></svg>
+    <Card className="s2" style={{ marginTop: 20, padding: "24px", textAlign: "center" }}>
+      <svg width="36" height="26" viewBox="0 0 40 28" fill={T.accent} style={{ marginBottom: 16 }}><path d="M20 0c-3 0-5.5 4-7 8l-1.5 4c-1.2 2.5-3 4.5-6 5.5-2 .8-4 .5-5-.5 2.5 3.5 5.5 4.5 8.5 3 2.5-1 4-3 5.5-5.5l1-2.5c1-2.5 2.5-5 4.5-5s3.5 2.5 4.5 5l1 2.5c1.5 2.5 3 4.5 5.5 5.5 3 1.5 6 .5 8.5-3-1 1-3 1.3-5 .5-3-1-4.8-3-6-5.5L26.5 8C25 4 22.5 0 20 0z"/></svg>
       <p style={{ fontSize: 17, fontWeight: 700, color: T.text }}>Your next flight awaits</p>
-      <p style={{ fontSize: 13, color: T.textMuted, marginTop: 6, lineHeight: 1.5, maxWidth: 280, margin: "6px auto 0" }}>
+      <p style={{ fontSize: 13, color: T.textMuted, marginTop: 8, lineHeight: 1.5, maxWidth: 280, margin: "8px auto 0" }}>
         Manage your booked flights, check in, and access your boarding pass.
       </p>
       <p style={{ fontSize: 15, fontWeight: 600, color: T.accent, marginTop: 16, cursor: "pointer" }}>Add trip</p>
     </Card>
 
     {/* Next Flight */}
-    <Card className="s3" style={{ marginTop: 14, padding: 0, overflow: "hidden" }}>
+    <Card className="s3" style={{ marginTop: 16, padding: 0, overflow: "hidden" }}>
       <div style={{ padding: "20px 20px 18px" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <Pill color={T.green}><span style={{ width: 6, height: 6, borderRadius: 3, background: T.green, display: "inline-block" }}/> Upcoming</Pill>
           <span style={{ fontSize: 12, color: T.textMuted, fontWeight: 500 }}>In 3 days</span>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 22 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 24 }}>
           <div style={{ textAlign: "center" }}>
             <p style={{ fontSize: 34, fontWeight: 800, color: T.text, letterSpacing: "-0.02em", fontFamily: fam }}>ADL</p>
             <p style={{ fontSize: 12, color: T.textMuted, marginTop: 2 }}>Adelaide</p>
@@ -208,7 +208,7 @@ const HomeScreen = ({ setScreen }) => {
             <p style={{ fontSize: 12, color: T.textMuted, marginTop: 2 }}>Tokyo</p>
           </div>
         </div>
-        <div style={{ display: "flex", gap: 24, marginTop: 22 }}>
+        <div style={{ display: "flex", gap: 24, marginTop: 24 }}>
           {[{ l: "Depart", v: "26 Mar · 06:15" }, { l: "Flight", v: "QF 71" }, { l: "Duration", v: "10h 25m" }].map((d, i) => (
             <div key={i}>
               <p style={{ fontSize: 11, color: T.textMuted, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.04em" }}>{d.l}</p>
@@ -216,13 +216,13 @@ const HomeScreen = ({ setScreen }) => {
             </div>
           ))}
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 16, padding: "10px 14px", borderRadius: T.radiusSm, background: T.surfaceAlt }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 16, padding: "12px 16px", borderRadius: T.radiusSm, background: T.surfaceAlt }}>
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ color: T.blue, flexShrink: 0 }}><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>
           <span style={{ fontSize: 13, color: T.textSecondary }}>Tokyo · 14°C, partly cloudy</span>
         </div>
       </div>
       <div onClick={() => setScreen("timeline")} style={{
-        padding: "14px 20px", borderTop: `1px solid ${T.border}`,
+        padding: "16px 20px", borderTop: `1px solid ${T.border}`,
         display: "flex", justifyContent: "space-between", alignItems: "center",
         cursor: "pointer", background: "#FAFAFA",
       }}>
@@ -232,17 +232,17 @@ const HomeScreen = ({ setScreen }) => {
     </Card>
 
     {/* Trip Readiness */}
-    <div className="s4" style={{ marginTop: 28 }}>
+    <div className="s4" style={{ marginTop: 24 }}>
       <SectionTitle>Trip readiness</SectionTitle>
       <Card style={{ padding: 20 }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 14 }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
           <span style={{ fontSize: 13, color: T.textMuted }}>3 of 4 complete</span>
           <span style={{ fontSize: 14, fontWeight: 700, color: T.accent }}>72%</span>
         </div>
         <div style={{ height: 6, borderRadius: 3, background: "#E5E5EA", overflow: "hidden" }}>
           <div style={{ width: "72%", height: "100%", borderRadius: 3, background: T.accent, animation: "progressFill 1.2s ease both" }}/>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginTop: 18 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginTop: 16 }}>
           {[
             { icon: <Icons.Check />, label: "Check-in", status: "Complete", done: true },
             { icon: <Icons.Luggage />, label: "Baggage", status: "Added", done: true },
@@ -250,7 +250,7 @@ const HomeScreen = ({ setScreen }) => {
             { icon: <Icons.Droplet />, label: "Wellness", status: "Set up", done: false },
           ].map((item, i) => (
             <div key={i} style={{
-              display: "flex", alignItems: "center", gap: 12, padding: "12px 14px",
+              display: "flex", alignItems: "center", gap: 12, padding: "12px 16px",
               borderRadius: T.radiusSm, background: item.urgent ? T.orangeSoft : T.surfaceAlt,
               cursor: "pointer",
             }}>
@@ -273,17 +273,17 @@ const HomeScreen = ({ setScreen }) => {
     </div>
 
     {/* Smart Suggestions */}
-    <div className="s5" style={{ marginTop: 28 }}>
+    <div className="s5" style={{ marginTop: 24 }}>
       <SectionTitle>Smart suggestions</SectionTitle>
       {[
         { icon: <Icons.Globe />, text: "Pack light layers — Tokyo is 14°C this week", color: T.blue, bg: T.blueSoft },
         { icon: <Icons.Sparkle />, text: "¥1 AUD = ¥97.2 JPY — rates are favourable", color: T.green, bg: T.greenSoft },
         { icon: <Icons.Leaf />, text: "Your flight emits 1.2t CO₂ — offset for $18", color: "#34C759", bg: T.greenSoft },
       ].filter((_, i) => !dismissed.includes(i)).map((s, i) => (
-        <Card key={i} style={{ padding: "14px 16px", display: "flex", alignItems: "center", gap: 14, marginBottom: 10 }}>
+        <Card key={i} style={{ padding: "16px", display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
           <div style={{ width: 38, height: 38, borderRadius: 19, flexShrink: 0, background: s.bg, display: "flex", alignItems: "center", justifyContent: "center", color: s.color }}>{s.icon}</div>
           <div style={{ flex: 1 }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
               <span style={{ color: T.accent }}><Icons.Sparkle /></span>
               <span style={{ fontSize: 10, fontWeight: 600, color: T.accent, textTransform: "uppercase", letterSpacing: "0.04em" }}>AI Suggested</span>
             </div>
@@ -295,9 +295,9 @@ const HomeScreen = ({ setScreen }) => {
     </div>
 
     {/* Book and Explore */}
-    <div className="s6" style={{ marginTop: 28 }}>
+    <div className="s6" style={{ marginTop: 24 }}>
       <SectionTitle>Book and explore</SectionTitle>
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 10 }}>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
         {[
           { icon: <Icons.Ticket filled={false} />, label: "Boarding\nPass", screen: "boarding" },
           { icon: <Icons.Map filled={false} />, label: "Airport\nMap", screen: "map" },
@@ -306,7 +306,7 @@ const HomeScreen = ({ setScreen }) => {
         ].map((a, i) => (
           <Card key={i} onClick={() => a.screen && setScreen(a.screen)} style={{
             display: "flex", flexDirection: "column", alignItems: "center",
-            justifyContent: "center", gap: 10, padding: "20px 8px",
+            justifyContent: "center", gap: 12, padding: "20px 8px",
           }}>
             <div style={{ color: T.textSecondary }}>{a.icon}</div>
             <p style={{ fontSize: 11, color: T.textSecondary, textAlign: "center", lineHeight: 1.35, whiteSpace: "pre-line", fontWeight: 500 }}>{a.label}</p>
@@ -316,7 +316,7 @@ const HomeScreen = ({ setScreen }) => {
     </div>
 
     {/* Loyalty */}
-    <Card className="s7" style={{ marginTop: 28, padding: 20, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+    <Card className="s7" style={{ marginTop: 24, padding: 20, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
       <div>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <p style={{ fontSize: 11, color: T.textMuted, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.04em" }}>Qantas Points</p>
@@ -329,15 +329,15 @@ const HomeScreen = ({ setScreen }) => {
     </Card>
 
     {/* Travel Update — matches Qantas info card */}
-    <Card style={{ marginTop: 14, padding: "16px 20px", animation: "fadeIn 0.4s ease both 0.4s" }}>
-      <div style={{ display: "flex", alignItems: "flex-start", gap: 14 }}>
+    <Card style={{ marginTop: 16, padding: "16px 20px", animation: "fadeIn 0.4s ease both 0.4s" }}>
+      <div style={{ display: "flex", alignItems: "flex-start", gap: 12 }}>
         <div style={{ width: 30, height: 30, borderRadius: 15, flexShrink: 0, background: T.tealSoft, display: "flex", alignItems: "center", justifyContent: "center" }}>
           <span style={{ fontSize: 14, fontWeight: 800, color: "#32ADE6" }}>i</span>
         </div>
         <div style={{ flex: 1 }}>
           <p style={{ fontSize: 16, fontWeight: 600, color: T.text }}>Travel update</p>
           <p style={{ fontSize: 13, color: T.textMuted, marginTop: 3, lineHeight: 1.4 }}>Information for travel to Japan and East Asia</p>
-          <p style={{ fontSize: 14, color: T.accent, fontWeight: 600, marginTop: 10, cursor: "pointer" }}>Read more</p>
+          <p style={{ fontSize: 14, color: T.accent, fontWeight: 600, marginTop: 12, cursor: "pointer" }}>Read more</p>
         </div>
       </div>
     </Card>
@@ -361,18 +361,18 @@ const TimelineScreen = ({ setScreen }) => {
   ];
   return (
     <div style={{ padding: "0 20px 24px" }}>
-      <div className="s1" style={{ padding: "6px 0 6px" }}>
+      <div className="s1" style={{ padding: "8px 0 8px" }}>
         <p style={{ fontSize: 13, color: T.textMuted, fontWeight: 500 }}>ADL → NRT · QF 71</p>
         <h1 style={{ fontSize: 30, fontWeight: 700, color: T.text, fontFamily: fam, marginTop: 4 }}>Trip Timeline</h1>
       </div>
-      <Card className="s2" style={{ marginTop: 16, padding: "16px 18px", display: "flex", alignItems: "center", gap: 12 }}>
+      <Card className="s2" style={{ marginTop: 16, padding: "16px 20px", display: "flex", alignItems: "center", gap: 12 }}>
         <div style={{ width: 10, height: 10, borderRadius: 5, background: T.green, animation: "pulse 2s infinite" }}/>
         <div>
           <p style={{ fontSize: 15, fontWeight: 600, color: T.text }}>Flight on time</p>
           <p style={{ fontSize: 13, color: T.textMuted }}>Leave home in ~2 hours for optimal arrival</p>
         </div>
       </Card>
-      <Card className="s3" style={{ marginTop: 10, padding: "14px 16px", display: "flex", alignItems: "center", gap: 12 }}>
+      <Card className="s3" style={{ marginTop: 12, padding: "16px", display: "flex", alignItems: "center", gap: 12 }}>
         <div style={{ width: 34, height: 34, borderRadius: 17, background: T.blueSoft, display: "flex", alignItems: "center", justifyContent: "center", color: T.blue, flexShrink: 0 }}><Icons.Droplet /></div>
         <div>
           <p style={{ fontSize: 13, fontWeight: 600, color: T.blue }}>Wellness tip</p>
@@ -385,7 +385,7 @@ const TimelineScreen = ({ setScreen }) => {
         {steps.map((step, i) => {
           const isDone = step.status === "done", isActive = step.status === "active";
           return (
-            <div key={i} onClick={() => setActiveStep(i)} style={{ display: "flex", gap: 14, padding: "8px 0", cursor: "pointer", animation: `slideIn 0.35s ease both ${0.04*i}s` }}>
+            <div key={i} onClick={() => setActiveStep(i)} style={{ display: "flex", gap: 12, padding: "8px 0", cursor: "pointer", animation: `slideIn 0.35s ease both ${0.04*i}s` }}>
               <div style={{
                 width: 32, height: 32, borderRadius: 16, flexShrink: 0,
                 display: "flex", alignItems: "center", justifyContent: "center",
@@ -398,7 +398,7 @@ const TimelineScreen = ({ setScreen }) => {
                 {isDone ? <Icons.Check /> : isActive ? <Icons.Zap /> : <span style={{ width: 8, height: 8, borderRadius: 4, background: "#D1D1D6" }}/>}
               </div>
               <Card style={{
-                flex: 1, padding: "14px 16px",
+                flex: 1, padding: "16px",
                 border: activeStep === i ? `1.5px solid ${isActive ? T.accent : isDone ? T.green : "#E5E5EA"}` : "none",
                 boxShadow: activeStep === i ? T.shadowMd : T.shadow,
               }}>
@@ -407,7 +407,7 @@ const TimelineScreen = ({ setScreen }) => {
                   {isDone && <Pill color={T.green} style={{ fontSize: 10 }}>Done</Pill>}
                   {isActive && <Pill color={T.accent} style={{ fontSize: 10 }}>Now</Pill>}
                 </div>
-                <p style={{ fontSize: 15, fontWeight: 600, color: T.text, marginTop: 6 }}>{step.title}</p>
+                <p style={{ fontSize: 15, fontWeight: 600, color: T.text, marginTop: 8 }}>{step.title}</p>
                 <p style={{ fontSize: 12, color: T.textMuted, marginTop: 3 }}>{step.desc}</p>
               </Card>
             </div>
@@ -443,7 +443,7 @@ const BoardingScreen = () => {
 
   return (
     <div style={{ padding: "0 20px 24px" }}>
-      <div className="s1" style={{ padding: "6px 0 20px" }}>
+      <div className="s1" style={{ padding: "8px 0 20px" }}>
         <h1 style={{ fontSize: 30, fontWeight: 700, color: T.text, fontFamily: fam }}>Boarding Pass</h1>
       </div>
       <Card className="s2" style={{ padding: 0, overflow: "hidden", position: "relative" }}>
@@ -458,7 +458,7 @@ const BoardingScreen = () => {
             <Pill color={T.green}><span style={{ width: 6, height: 6, borderRadius: 3, background: T.green, display: "inline-block" }}/> Ready to board</Pill>
             <p style={{ fontSize: 13, color: T.textMuted, fontWeight: 600, fontFamily: fontMono }}>QF 71</p>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 26 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 24 }}>
             <div><p style={{ fontSize: 40, fontWeight: 800, color: T.text, fontFamily: fam, letterSpacing: "-0.03em" }}>ADL</p><p style={{ fontSize: 12, color: T.textMuted }}>Adelaide</p></div>
             <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
               <div style={{ width: "100%", height: 1, background: "#D1D1D6" }}/>
@@ -466,12 +466,12 @@ const BoardingScreen = () => {
             </div>
             <div style={{ textAlign: "right" }}><p style={{ fontSize: 40, fontWeight: 800, color: T.text, fontFamily: fam, letterSpacing: "-0.03em" }}>NRT</p><p style={{ fontSize: 12, color: T.textMuted }}>Tokyo Narita</p></div>
           </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginTop: 28 }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginTop: 24 }}>
             {[{ l: "Date", v: "26 Mar" }, { l: "Departs", v: "06:15" }, { l: "Terminal", v: "T1" }, { l: "Gate", v: "14" }, { l: "Seat", v: "14A" }, { l: "Group", v: "2" }].map((d, i) => (
               <div key={i}><p style={{ fontSize: 10, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 500 }}>{d.l}</p><p style={{ fontSize: 20, fontWeight: 700, color: T.text, marginTop: 4, fontFamily: ["Gate","Seat","Group","Terminal"].includes(d.l) ? fontMono : fam }}>{d.v}</p></div>
             ))}
           </div>
-          <div style={{ marginTop: 20, padding: "10px 14px", borderRadius: T.radiusSm, background: T.surfaceAlt, display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{ marginTop: 20, padding: "12px 16px", borderRadius: T.radiusSm, background: T.surfaceAlt, display: "flex", alignItems: "center", gap: 8 }}>
             <span style={{ color: T.textSecondary }}><Icons.Luggage /></span>
             <span style={{ fontSize: 12, color: T.textSecondary }}>1 × 23kg checked · 1 × 7kg cabin</span>
           </div>
@@ -499,10 +499,10 @@ const BoardingScreen = () => {
       </Card>
 
       {/* Live countdown */}
-      <Card className="s3" style={{ marginTop: 16, padding: 22, textAlign: "center" }}>
+      <Card className="s3" style={{ marginTop: 16, padding: 24, textAlign: "center" }}>
         <p style={{ fontSize: 11, color: stateColor, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em" }}>{stateLabel}</p>
         {boardingState === "waiting" && (
-          <div style={{ display: "flex", justifyContent: "center", gap: 24, marginTop: 14 }}>
+          <div style={{ display: "flex", justifyContent: "center", gap: 24, marginTop: 16 }}>
             {[{ v: String(countdown.h).padStart(2, "0"), l: "hrs" }, { v: String(countdown.m).padStart(2, "0"), l: "min" }, { v: String(countdown.s).padStart(2, "0"), l: "sec" }].map((t, i) => (
               <div key={i}><p style={{ fontSize: 36, fontWeight: 800, color: stateColor, fontFamily: fontMono }}>{t.v}</p><p style={{ fontSize: 10, color: T.textMuted, marginTop: 2 }}>{t.l}</p></div>
             ))}
@@ -524,7 +524,7 @@ const BoardingScreen = () => {
       </div>
 
       {/* Wallet buttons */}
-      <div className="s5" style={{ display: "flex", gap: 10, marginTop: 20 }}>
+      <div className="s5" style={{ display: "flex", gap: 12, marginTop: 20 }}>
         <button style={{ flex: 1, padding: "16px", height: 56, borderRadius: T.radius, border: "none", background: T.accent, color: "#fff", fontSize: 17, fontWeight: 500, fontFamily: fam, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
           Add to Wallet
         </button>
@@ -553,13 +553,13 @@ const MapScreen = () => {
 
   return (
     <div style={{ padding: "0 20px 24px" }}>
-      <div className="s1" style={{ padding: "6px 0 4px" }}>
+      <div className="s1" style={{ padding: "8px 0 4px" }}>
         <p style={{ fontSize: 13, color: T.textMuted, fontWeight: 500 }}>Adelaide Airport · Terminal 1</p>
         <h1 style={{ fontSize: 30, fontWeight: 700, color: T.text, fontFamily: fam, marginTop: 4 }}>Airport Map</h1>
       </div>
       <div className="s2" style={{ display: "flex", gap: 8, marginTop: 16, overflowX: "auto", paddingBottom: 4 }}>
         {["All", "Gates", "Food", "Lounges", "Charging"].map((f, i) => (
-          <span key={i} onClick={() => setFilter(f)} style={{ padding: "8px 16px", borderRadius: 20, fontSize: 13, fontWeight: 600, background: filter === f ? T.accent : T.card, color: filter === f ? "#fff" : T.textSecondary, boxShadow: filter === f ? "none" : T.shadow, whiteSpace: "nowrap", cursor: "pointer" }}>
+          <span key={i} onClick={() => setFilter(f)} style={{ padding: "10px 16px", borderRadius: 20, fontSize: 13, fontWeight: 600, background: filter === f ? T.accent : T.card, color: filter === f ? "#fff" : T.textSecondary, boxShadow: filter === f ? "none" : T.shadow, whiteSpace: "nowrap", cursor: "pointer" }}>
             {f}{f !== "All" ? ` (${filterCounts[f]})` : ""}
           </span>
         ))}
@@ -604,15 +604,15 @@ const MapScreen = () => {
             <div style={{ width: sel === p.id ? 34 : 24, height: sel === p.id ? 34 : 24, borderRadius: "50%", background: sel === p.id ? p.color : "#fff", border: `2.5px solid ${p.color}`, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.25s ease-out", boxShadow: sel === p.id ? `0 2px 10px ${p.color}44` : T.shadow }}>
               <span style={{ fontSize: sel === p.id ? 12 : 10, color: sel === p.id ? "#fff" : p.color }}>{p.icon}</span>
             </div>
-            {sel === p.id && <div style={{ position: "absolute", top: "110%", left: "50%", transform: "translateX(-50%)", background: "#fff", border: `1px solid ${T.border}`, borderRadius: T.radiusSm, padding: "10px 14px", minWidth: 150, animation: "fadeIn 0.2s ease-out both", boxShadow: T.shadowMd, whiteSpace: "nowrap", zIndex: 10 }}>
+            {sel === p.id && <div style={{ position: "absolute", top: "110%", left: "50%", transform: "translateX(-50%)", background: "#fff", border: `1px solid ${T.border}`, borderRadius: T.radiusSm, padding: "12px 16px", minWidth: 150, animation: "fadeIn 0.2s ease-out both", boxShadow: T.shadowMd, whiteSpace: "nowrap", zIndex: 10 }}>
               <p style={{ fontSize: 13, fontWeight: 600, color: p.color }}>{p.label}</p>
               <p style={{ fontSize: 11, color: T.textMuted, marginTop: 2 }}>{p.desc}</p>
-              <div style={{ marginTop: 8, padding: "6px 12px", borderRadius: T.radiusSm, background: p.color, color: "#fff", fontSize: 11, fontWeight: 600, textAlign: "center", cursor: "pointer" }}>Navigate here</div>
+              <div style={{ marginTop: 8, padding: "8px 12px", borderRadius: T.radiusSm, background: p.color, color: "#fff", fontSize: 11, fontWeight: 600, textAlign: "center", cursor: "pointer" }}>Navigate here</div>
             </div>}
           </div>
         ))}
       </Card>
-      <Card className="s4" style={{ marginTop: 12, padding: "16px 18px", display: "flex", alignItems: "center", gap: 14 }}>
+      <Card className="s4" style={{ marginTop: 12, padding: "16px 20px", display: "flex", alignItems: "center", gap: 12 }}>
         <div style={{ width: 42, height: 42, borderRadius: 21, background: T.accentSoft, display: "flex", alignItems: "center", justifyContent: "center", color: T.accent }}><Icons.ArrowRight /></div>
         <div style={{ flex: 1 }}><p style={{ fontSize: 15, fontWeight: 600, color: T.text }}>Navigate to Gate 14</p><p style={{ fontSize: 13, color: T.textMuted }}>6 min walk · 380m · Level 1</p></div>
         <div style={{ padding: "10px 20px", borderRadius: T.radiusSm, background: T.accent, color: "#fff", fontSize: 14, fontWeight: 600, cursor: "pointer" }}>Go</div>
@@ -621,7 +621,7 @@ const MapScreen = () => {
         <SectionTitle>Nearby</SectionTitle>
         <Card style={{ padding: 0, overflow: "hidden" }}>
           {pois.slice(2).map((p, idx) => (
-            <div key={p.id} style={{ display: "flex", alignItems: "center", gap: 14, padding: "14px 18px", borderBottom: idx < pois.slice(2).length - 1 ? `1px solid ${T.border}` : "none" }}>
+            <div key={p.id} style={{ display: "flex", alignItems: "center", gap: 12, padding: "16px 20px", borderBottom: idx < pois.slice(2).length - 1 ? `1px solid ${T.border}` : "none" }}>
               <div style={{ width: 10, height: 10, borderRadius: 5, background: p.color, flexShrink: 0 }}/>
               <div style={{ flex: 1 }}><p style={{ fontSize: 14, fontWeight: 600, color: T.text }}>{p.label}</p><p style={{ fontSize: 12, color: T.textMuted }}>{p.desc}</p></div>
               <div style={{ textAlign: "right" }}>
@@ -641,12 +641,12 @@ const DisruptionScreen = ({ setScreen }) => {
   const [accepted, setAccepted] = useState(false);
   return (
     <div style={{ padding: "0 20px 24px" }}>
-      <div className="s1" style={{ padding: "6px 0 4px" }}>
+      <div className="s1" style={{ padding: "8px 0 4px" }}>
         <p style={{ fontSize: 13, color: T.textSecondary, fontWeight: 500 }}>We're taking care of this</p>
         <h1 style={{ fontSize: 30, fontWeight: 700, color: T.text, fontFamily: fam, marginTop: 4 }}>Flight Update</h1>
       </div>
       <Card className="s2" style={{ marginTop: 16, padding: "20px", border: `1.5px solid ${T.orange}30`, background: "linear-gradient(135deg, #FFFBF7, #FFFFFF)" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
           <div style={{ width: 10, height: 10, borderRadius: 5, background: T.orange, animation: "pulse 2.5s infinite" }}/>
           <Pill color={T.orange}>Delay · 2h 15m</Pill>
         </div>
@@ -662,24 +662,24 @@ const DisruptionScreen = ({ setScreen }) => {
             <p style={{ fontSize: 16, fontWeight: 700, color: T.text, marginTop: 4 }}>08:30 ACST</p>
           </div>
         </div>
-        <div style={{ marginTop: 14, padding: "10px 14px", borderRadius: T.radiusSm, background: T.greenSoft, display: "flex", alignItems: "center", gap: 8 }}>
+        <div style={{ marginTop: 16, padding: "12px 16px", borderRadius: T.radiusSm, background: T.greenSoft, display: "flex", alignItems: "center", gap: 8 }}>
           <span style={{ color: T.green }}><Icons.Check /></span>
           <span style={{ fontSize: 13, color: T.green, fontWeight: 500 }}>Your gate is unchanged · Gate 14</span>
         </div>
       </Card>
       <div className="s3" style={{ marginTop: 24 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
           <span style={{ color: T.accent }}><Icons.Sparkle /></span>
           <h2 style={{ fontSize: 20, fontWeight: 700, color: T.text, fontFamily: fam }}>Smart alternatives</h2>
         </div>
         {!accepted ? (
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
             {[
               { flight: "QF 73", time: "09:45", arr: "20:10 JST", badge: "Recommended", reason: "Earliest arrival, similar seat", bc: T.green, price: "No extra cost", seat: "12C · Aisle" },
               { flight: "JL 772", time: "11:00", arr: "21:25 JST", badge: "Codeshare", reason: "Partner airline, window available", bc: T.blue, price: "+$0 (partner)", seat: "23A · Window" },
               { flight: "QF 79", time: "14:30", arr: "01:55+1 JST", badge: "Next day arr.", reason: "Latest option, premium seat", bc: T.textMuted, price: "No extra cost", seat: "8F · Window" },
             ].map((o, i) => (
-              <Card key={i} onClick={() => i === 0 && setAccepted(true)} style={{ padding: 18, cursor: i === 0 ? "pointer" : "default", border: i === 0 ? `1.5px solid ${T.green}40` : "none" }}>
+              <Card key={i} onClick={() => i === 0 && setAccepted(true)} style={{ padding: 20, cursor: i === 0 ? "pointer" : "default", border: i === 0 ? `1.5px solid ${T.green}40` : "none" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                   <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
                     <span style={{ fontSize: 16, fontWeight: 700, color: T.text, fontFamily: fontMono }}>{o.flight}</span>
@@ -687,8 +687,8 @@ const DisruptionScreen = ({ setScreen }) => {
                   </div>
                   <span style={{ fontSize: 13, color: T.green, fontWeight: 600 }}>{o.price}</span>
                 </div>
-                {i === 0 && <p style={{ fontSize: 12, color: T.green, marginTop: 6 }}>{o.reason}</p>}
-                <div style={{ display: "flex", gap: 24, marginTop: 14 }}>
+                {i === 0 && <p style={{ fontSize: 12, color: T.green, marginTop: 8 }}>{o.reason}</p>}
+                <div style={{ display: "flex", gap: 24, marginTop: 16 }}>
                   {[{ l: "Depart", v: o.time }, { l: "Arrive", v: o.arr }, { l: "Seat", v: o.seat }].map((d, j) => (
                     <div key={j}><p style={{ fontSize: 10, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.04em" }}>{d.l}</p><p style={{ fontSize: 14, fontWeight: 600, color: T.text, marginTop: 4 }}>{d.v}</p></div>
                   ))}
@@ -703,12 +703,12 @@ const DisruptionScreen = ({ setScreen }) => {
         ) : (
           <Card style={{ padding: "32px 20px", border: `1.5px solid ${T.green}30` }}>
             <div style={{ textAlign: "center" }}>
-              <div style={{ width: 56, height: 56, borderRadius: 28, background: T.green, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 18px", animation: "checkPop 0.5s ease both" }}><Icons.CheckBig /></div>
+              <div style={{ width: 56, height: 56, borderRadius: 28, background: T.green, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 20px", animation: "checkPop 0.5s ease both" }}><Icons.CheckBig /></div>
               <p style={{ fontSize: 22, fontWeight: 700, color: T.text, fontFamily: fam }}>Rebooked successfully</p>
               <p style={{ fontSize: 14, color: T.textMuted, marginTop: 8 }}>QF 73 · Departing 09:45 · Seat 12C</p>
-              <p style={{ fontSize: 14, color: T.green, fontWeight: 600, marginTop: 6 }}>Boarding pass updated automatically</p>
+              <p style={{ fontSize: 14, color: T.green, fontWeight: 600, marginTop: 8 }}>Boarding pass updated automatically</p>
             </div>
-            <div style={{ marginTop: 24, padding: "14px 16px", borderRadius: T.radiusSm, background: T.surfaceAlt }}>
+            <div style={{ marginTop: 24, padding: "16px", borderRadius: T.radiusSm, background: T.surfaceAlt }}>
               <p style={{ fontSize: 13, fontWeight: 600, color: T.text, marginBottom: 8 }}>What to do now</p>
               <p style={{ fontSize: 13, color: T.textSecondary, lineHeight: 1.5 }}>Your gate hasn't changed. Enjoy complimentary lounge access while you wait. Your checked baggage has been transferred automatically.</p>
             </div>
@@ -726,18 +726,18 @@ const DisruptionScreen = ({ setScreen }) => {
             { l: "Lounge access", v: "Granted", icon: <Icons.Star />, expiry: "Gate 14 area" },
             { l: "Wi-Fi credit", v: "Complimentary", icon: <Icons.Wifi />, expiry: "On board QF 73" },
           ].map((e, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: 14, padding: "15px 18px", borderBottom: i < 2 ? `1px solid ${T.border}` : "none" }}>
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "16px 20px", borderBottom: i < 2 ? `1px solid ${T.border}` : "none" }}>
               <div style={{ width: 34, height: 34, borderRadius: 17, background: T.accentSoft, display: "flex", alignItems: "center", justifyContent: "center", color: T.accent }}>{e.icon}</div>
               <div style={{ flex: 1 }}>
                 <span style={{ fontSize: 14, color: T.text, fontWeight: 500 }}>{e.l}</span>
                 <p style={{ fontSize: 11, color: T.textMuted, marginTop: 2 }}>{e.expiry}</p>
               </div>
-              <div style={{ padding: "6px 14px", borderRadius: T.radiusSm, background: T.greenSoft, color: T.green, fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Claim</div>
+              <div style={{ padding: "8px 16px", borderRadius: T.radiusSm, background: T.greenSoft, color: T.green, fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Claim</div>
             </div>
           ))}
         </Card>
       </div>
-      <Card className="s5" style={{ marginTop: 16, padding: "16px 18px", display: "flex", alignItems: "center", gap: 14, cursor: "pointer" }}>
+      <Card className="s5" style={{ marginTop: 16, padding: "16px 20px", display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}>
         <div style={{ width: 38, height: 38, borderRadius: 19, background: T.purpleSoft, display: "flex", alignItems: "center", justifyContent: "center", color: T.purple }}><Icons.Sparkle /></div>
         <div><p style={{ fontSize: 15, fontWeight: 600, color: T.text }}>Need help? Ask your AI assistant</p><p style={{ fontSize: 12, color: T.textMuted }}>"What are my rights?" · "Hotel options nearby"</p></div>
       </Card>
@@ -757,34 +757,34 @@ const WrapScreen = () => {
       {/* Gradient header */}
       <div className="s1" style={{ margin: "0 -20px", padding: "24px 20px 32px", background: "linear-gradient(135deg, #E1081F, #E86831)", borderRadius: "0 0 24px 24px", textAlign: "center", marginBottom: 24 }}>
         <Pill color="#fff" style={{ background: "rgba(255,255,255,0.2)" }}><Icons.Sparkle /> Year in Review</Pill>
-        <h1 style={{ fontSize: 30, fontWeight: 800, color: "#fff", fontFamily: fam, marginTop: 10 }}>Your 2026 Trip Wrap</h1>
-        <p style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", marginTop: 6 }}>Here's how you travelled this year</p>
+        <h1 style={{ fontSize: 30, fontWeight: 800, color: "#fff", fontFamily: fam, marginTop: 12 }}>Your 2026 Trip Wrap</h1>
+        <p style={{ fontSize: 14, color: "rgba(255,255,255,0.8)", marginTop: 8 }}>Here's how you travelled this year</p>
       </div>
 
       {/* Stats grid */}
-      <div className="s2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10 }}>
+      <div className="s2" style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12 }}>
         {[
           { l: "Flights", v: "12", s: "this year" },
           { l: "Distance", v: "47,800", s: "km traveled" },
           { l: "Countries", v: "6", s: "visited" },
           { l: "Hours in air", v: "127", s: "hours total" },
         ].map((st, i) => (
-          <Card key={i} style={{ textAlign: "center", padding: "22px 12px" }}>
+          <Card key={i} style={{ textAlign: "center", padding: "24px 12px" }}>
             <p style={{ fontSize: 34, fontWeight: 800, color: T.accent, fontFamily: fontMono, animation: `countUp 0.6s ease both ${0.15*i}s` }}>{st.v}</p>
-            <p style={{ fontSize: 14, fontWeight: 600, color: T.text, marginTop: 6 }}>{st.l}</p>
+            <p style={{ fontSize: 14, fontWeight: 600, color: T.text, marginTop: 8 }}>{st.l}</p>
             <p style={{ fontSize: 11, color: T.textMuted }}>{st.s}</p>
           </Card>
         ))}
       </div>
 
       {/* Milestone cards */}
-      <div className="s3" style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 10 }}>
+      <div className="s3" style={{ marginTop: 20, display: "flex", flexDirection: "column", gap: 12 }}>
         {[
           { icon: <Icons.Plane />, label: "Longest flight", value: "ADL → LHR · 22h 15m" },
           { icon: <Icons.Star />, label: "Most visited", value: "Tokyo · 3 trips" },
           { icon: <Icons.Ticket filled={false} />, label: "Favourite seat", value: "Window · 83% of flights" },
         ].map((m, i) => (
-          <Card key={i} style={{ padding: "16px 18px", display: "flex", alignItems: "center", gap: 14 }}>
+          <Card key={i} style={{ padding: "16px 20px", display: "flex", alignItems: "center", gap: 12 }}>
             <div style={{ width: 38, height: 38, borderRadius: 19, background: T.accentSoft, display: "flex", alignItems: "center", justifyContent: "center", color: T.accent }}>{m.icon}</div>
             <div>
               <p style={{ fontSize: 12, color: T.textMuted, fontWeight: 500 }}>{m.label}</p>
@@ -795,9 +795,9 @@ const WrapScreen = () => {
       </div>
 
       {/* Interactive bar chart */}
-      <Card className="s4" style={{ marginTop: 20, padding: 22 }}>
+      <Card className="s4" style={{ marginTop: 20, padding: 24 }}>
         <h3 style={{ fontSize: 16, fontWeight: 600, color: T.text, marginBottom: 16 }}>Flights per month</h3>
-        <div style={{ display: "flex", alignItems: "flex-end", gap: 6, height: 80, position: "relative" }}>
+        <div style={{ display: "flex", alignItems: "flex-end", gap: 8, height: 80, position: "relative" }}>
           {monthData.map((v, i) => (
             <div key={i} onClick={() => v > 0 && setActiveMonth(activeMonth === i ? null : i)} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 4, cursor: v > 0 ? "pointer" : "default" }}>
               <div style={{ width: "100%", borderRadius: 4, height: maxM > 0 ? `${(v/maxM)*60}px` : 0, minHeight: v > 0 ? 8 : 2, background: activeMonth === i ? T.accentDark : v > 0 ? T.accent : "#E5E5EA", transformOrigin: "bottom", animation: `barGrow 0.6s ease both ${0.05*i}s`, transition: "background 0.2s" }}/>
@@ -806,7 +806,7 @@ const WrapScreen = () => {
           ))}
         </div>
         {activeMonth !== null && monthData[activeMonth] > 0 && (
-          <div style={{ marginTop: 12, padding: "10px 14px", borderRadius: T.radiusSm, background: T.surfaceAlt, animation: "fadeIn 0.2s ease-out both" }}>
+          <div style={{ marginTop: 12, padding: "12px 16px", borderRadius: T.radiusSm, background: T.surfaceAlt, animation: "fadeIn 0.2s ease-out both" }}>
             <p style={{ fontSize: 12, color: T.textSecondary }}>{monthRoutes[activeMonth]}</p>
           </div>
         )}
@@ -814,7 +814,7 @@ const WrapScreen = () => {
 
       {/* Route map */}
       <Card className="s5" style={{ marginTop: 20, padding: 0, overflow: "hidden" }}>
-        <div style={{ padding: "18px 22px 8px" }}>
+        <div style={{ padding: "20px 24px 8px" }}>
           <h3 style={{ fontSize: 16, fontWeight: 600, color: T.text }}>Your world</h3>
         </div>
         <svg viewBox="0 0 360 180" style={{ width: "100%", height: 160, padding: "0 16px 16px" }}>
@@ -851,7 +851,7 @@ const WrapScreen = () => {
         <SectionTitle>Top routes</SectionTitle>
         <Card style={{ padding: 0, overflow: "hidden" }}>
           {[{ f: "ADL", t: "SYD", c: 4 }, { f: "ADL", t: "NRT", c: 3 }, { f: "SYD", t: "SIN", c: 2 }].map((r, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: 14, padding: "15px 18px", borderBottom: i < 2 ? `1px solid ${T.border}` : "none" }}>
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "16px 20px", borderBottom: i < 2 ? `1px solid ${T.border}` : "none" }}>
               <div style={{ width: 28, height: 28, borderRadius: 14, background: T.accentSoft, color: T.accent, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 12, fontWeight: 700 }}>{i+1}</div>
               <p style={{ flex: 1, fontSize: 15, fontWeight: 600, color: T.text }}>{r.f} <span style={{ color: T.textDim }}>→</span> {r.t}</p>
               <Pill color={T.accent}>{r.c} flights</Pill>
@@ -861,13 +861,13 @@ const WrapScreen = () => {
       </div>
 
       {/* Sustainability */}
-      <Card className="s7" style={{ marginTop: 20, padding: 22 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
+      <Card className="s7" style={{ marginTop: 20, padding: 24 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
           <span style={{ color: T.green }}><Icons.Leaf /></span>
           <h3 style={{ fontSize: 16, fontWeight: 600, color: T.text }}>Sustainability impact</h3>
         </div>
         <p style={{ fontSize: 14, color: T.textMuted, lineHeight: 1.5 }}>You offset <strong style={{ color: T.green }}>9.4 tonnes</strong> of CO₂ — equivalent to planting <strong style={{ color: T.green }}>47 trees</strong>.</p>
-        <div style={{ display: "flex", gap: 3, marginTop: 14 }}>
+        <div style={{ display: "flex", gap: 4, marginTop: 16 }}>
           {Array.from({ length: 10 }, (_, i) => (
             <div key={i} style={{ flex: 1, height: 6, borderRadius: 3, background: i < 8 ? `linear-gradient(90deg, ${T.green}, #5AC8FA)` : "#E5E5EA", animation: `barGrow 0.4s ease both ${0.05*i}s`, transformOrigin: "left" }}/>
           ))}
@@ -885,7 +885,7 @@ const WrapScreen = () => {
           <div style={{ padding: "24px 20px", background: "linear-gradient(135deg, #E1081F, #E86831)", color: "#fff", textAlign: "center" }}>
             <svg width="28" height="20" viewBox="0 0 40 28" fill="#fff" style={{ marginBottom: 8 }}><path d="M20 0c-3 0-5.5 4-7 8l-1.5 4c-1.2 2.5-3 4.5-6 5.5-2 .8-4 .5-5-.5 2.5 3.5 5.5 4.5 8.5 3 2.5-1 4-3 5.5-5.5l1-2.5c1-2.5 2.5-5 4.5-5s3.5 2.5 4.5 5l1 2.5c1.5 2.5 3 4.5 5.5 5.5 3 1.5 6 .5 8.5-3-1 1-3 1.3-5 .5-3-1-4.8-3-6-5.5L26.5 8C25 4 22.5 0 20 0z"/></svg>
             <p style={{ fontSize: 18, fontWeight: 800 }}>My 2026 Trip Wrap</p>
-            <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 14, fontSize: 13, fontWeight: 600 }}>
+            <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 16, fontSize: 13, fontWeight: 600 }}>
               <span>12 Flights</span><span>6 Countries</span><span>47,800 km</span>
             </div>
           </div>
@@ -961,7 +961,7 @@ const AiAssistant = ({ screen, onClose }) => {
           </div>
           <span style={{ fontSize: 16, fontWeight: 600, color: T.text }}>Ask Qantas</span>
         </div>
-        <span onClick={onClose} style={{ fontSize: 20, color: T.textMuted, cursor: "pointer", padding: 4 }}>✕</span>
+        <span onClick={onClose} style={{ fontSize: 20, color: T.textMuted, cursor: "pointer", padding: 8 }}>✕</span>
       </div>
       <div style={{ flex: 1, overflowY: "auto", padding: "16px 20px" }}>
         {messages.length === 0 && (
@@ -992,11 +992,11 @@ const AiAssistant = ({ screen, onClose }) => {
       {messages.length < 2 && (
         <div style={{ padding: "0 20px 12px", display: "flex", gap: 8, overflowX: "auto" }}>
           {chips.map((chip, i) => (
-            <span key={i} onClick={() => handleSend(chip)} style={{ padding: "8px 14px", borderRadius: 20, fontSize: 13, fontWeight: 500, background: T.surfaceAlt, color: T.textSecondary, whiteSpace: "nowrap", cursor: "pointer", border: `1px solid ${T.border}` }}>{chip}</span>
+            <span key={i} onClick={() => handleSend(chip)} style={{ padding: "8px 16px", borderRadius: 20, fontSize: 13, fontWeight: 500, background: T.surfaceAlt, color: T.textSecondary, whiteSpace: "nowrap", cursor: "pointer", border: `1px solid ${T.border}` }}>{chip}</span>
           ))}
         </div>
       )}
-      <div style={{ padding: "12px 20px 16px", borderTop: `1px solid ${T.border}`, display: "flex", gap: 10 }}>
+      <div style={{ padding: "12px 20px 16px", borderTop: `1px solid ${T.border}`, display: "flex", gap: 12 }}>
         <input value={inputVal} onChange={e => setInputVal(e.target.value)} onKeyDown={e => e.key === "Enter" && handleSend()} placeholder="Ask anything..." style={{ flex: 1, height: 44, borderRadius: 22, border: `1px solid ${T.border}`, padding: "0 16px", fontSize: 14, fontFamily: fam, outline: "none" }}/>
         <div onClick={() => handleSend()} style={{ width: 44, height: 44, borderRadius: 22, background: T.accent, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", flexShrink: 0 }}>
           <span style={{ color: "#fff" }}><Icons.ArrowRight /></span>
@@ -1026,9 +1026,9 @@ export default function App() {
       <style>{animCSS}</style>
       <div style={{ width: 393, height: 852, borderRadius: 48, background: T.bg, position: "relative", overflow: "hidden", boxShadow: "0 20px 60px rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08)" }}>
         {/* Status Bar */}
-        <div style={{ position: "sticky", top: 0, zIndex: 10, padding: "14px 30px 10px", display: "flex", justifyContent: "space-between", alignItems: "center", background: T.bg }}>
+        <div style={{ position: "sticky", top: 0, zIndex: 10, padding: "16px 32px 12px", display: "flex", justifyContent: "space-between", alignItems: "center", background: T.bg }}>
           <span style={{ fontSize: 16, fontWeight: 600, color: T.text }}>9:41</span>
-          <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
             <svg width="16" height="12" viewBox="0 0 16 12" fill={T.text}><rect x="0" y="4" width="3" height="8" rx="0.5" opacity="0.3"/><rect x="4.5" y="2" width="3" height="10" rx="0.5" opacity="0.5"/><rect x="9" y="0" width="3" height="12" rx="0.5" opacity="0.8"/><rect x="13.5" y="0" width="2.5" height="12" rx="0.5"/></svg>
             <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M1 8.5a10 10 0 0114 0" stroke={T.text} strokeWidth="1.5" strokeLinecap="round"/><path d="M4 11a6 6 0 018 0" stroke={T.text} strokeWidth="1.5" strokeLinecap="round"/><circle cx="8" cy="12" r="1" fill={T.text}/></svg>
             <div style={{ width: 25, height: 12, borderRadius: 3, border: `1.2px solid ${T.text}77`, padding: 1.5, position: "relative" }}>
@@ -1066,7 +1066,7 @@ export default function App() {
         {/* Tab Bar */}
         <div style={{
           position: "absolute", bottom: 0, left: 0, right: 0, height: 84,
-          padding: "6px 6px 26px", background: "#FFFFFF",
+          padding: "8px 8px 24px", background: "#FFFFFF",
           borderTop: `0.5px solid rgba(0,0,0,0.12)`,
           display: "flex", justifyContent: "space-around", alignItems: "flex-start",
         }}>
@@ -1074,8 +1074,8 @@ export default function App() {
             const active = screen === id;
             return (
               <div key={id} onClick={() => handleScreen(id)} style={{
-                display: "flex", flexDirection: "column", alignItems: "center", gap: 3,
-                cursor: "pointer", padding: "6px 14px", borderRadius: 14, position: "relative",
+                display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
+                cursor: "pointer", padding: "8px 16px", borderRadius: 16, position: "relative",
               }}>
                 {active && <div style={{ position: "absolute", inset: "2px 4px", background: T.accentSoft, borderRadius: 12 }}/>}
                 <span style={{ color: active ? T.accent : T.textMuted, position: "relative", zIndex: 1 }}><Icon filled={active} /></span>
