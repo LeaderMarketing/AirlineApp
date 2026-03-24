@@ -486,14 +486,18 @@ const BoardingScreen = () => (
 // ─── MAP ─────────────────────────────────────────────────────────
 const MapScreen = () => {
   const [sel, setSel] = useState(null);
+  const [filter, setFilter] = useState("All");
   const pois = [
-    { id: 1, x: 20, y: 28, label: "Gate 14", desc: "Your gate · 6 min walk", color: T.accent },
-    { id: 2, x: 58, y: 20, label: "Qantas Lounge", desc: "Level 1 · Gold access", color: T.purple },
-    { id: 3, x: 36, y: 52, label: "Café & Bar", desc: "Coffee, snacks, meals", color: T.green },
-    { id: 4, x: 72, y: 42, label: "Charging Hub", desc: "USB-C + wireless", color: T.blue },
-    { id: 5, x: 14, y: 64, label: "Security", desc: "~8 min current wait", color: T.red },
-    { id: 6, x: 52, y: 68, label: "Duty Free", desc: "Open until 05:45", color: T.orange },
+    { id: 1, x: 82, y: 28, label: "Gate 14", desc: "Your gate · 6 min walk", color: T.accent, icon: <Icons.Plane />, walk: "6 min", category: "Gates" },
+    { id: 2, x: 58, y: 24, label: "Qantas Lounge", desc: "Level 1 · Gold access", color: T.purple, icon: <Icons.Star />, walk: "4 min", category: "Lounges" },
+    { id: 3, x: 42, y: 36, label: "Cafe & Bar", desc: "Coffee, snacks · Open", color: T.green, icon: <Icons.Coffee />, walk: "2 min", category: "Food" },
+    { id: 4, x: 70, y: 48, label: "Charging Hub", desc: "USB-C + wireless", color: T.blue, icon: <Icons.Zap />, walk: "5 min", category: "Charging" },
+    { id: 5, x: 14, y: 48, label: "Security", desc: "~8 min current wait", color: T.orange, icon: <Icons.Shield />, walk: "1 min", category: "Other" },
+    { id: 6, x: 52, y: 62, label: "Duty Free", desc: "Open until 05:45", color: T.wattle, icon: <Icons.Globe />, walk: "3 min", category: "Other" },
   ];
+  const filteredPois = filter === "All" ? pois : pois.filter(p => p.category === filter);
+  const filterCounts = { "Gates": pois.filter(p => p.category === "Gates").length, "Food": pois.filter(p => p.category === "Food").length, "Lounges": pois.filter(p => p.category === "Lounges").length, "Charging": pois.filter(p => p.category === "Charging").length };
+
   return (
     <div style={{ padding: "0 20px 24px" }}>
       <div className="s1" style={{ padding: "6px 0 4px" }}>
@@ -502,31 +506,55 @@ const MapScreen = () => {
       </div>
       <div className="s2" style={{ display: "flex", gap: 8, marginTop: 16, overflowX: "auto", paddingBottom: 4 }}>
         {["All", "Gates", "Food", "Lounges", "Charging"].map((f, i) => (
-          <span key={i} style={{ padding: "8px 16px", borderRadius: 20, fontSize: 13, fontWeight: 600, background: i === 0 ? T.accent : T.card, color: i === 0 ? "#fff" : T.textSecondary, boxShadow: i === 0 ? "none" : T.shadow, whiteSpace: "nowrap", cursor: "pointer" }}>{f}</span>
+          <span key={i} onClick={() => setFilter(f)} style={{ padding: "8px 16px", borderRadius: 20, fontSize: 13, fontWeight: 600, background: filter === f ? T.accent : T.card, color: filter === f ? "#fff" : T.textSecondary, boxShadow: filter === f ? "none" : T.shadow, whiteSpace: "nowrap", cursor: "pointer" }}>
+            {f}{f !== "All" ? ` (${filterCounts[f]})` : ""}
+          </span>
         ))}
       </div>
-      <Card className="s3" style={{ marginTop: 16, padding: 0, height: 280, position: "relative", overflow: "hidden", background: "#F5F6F8" }}>
-        <svg width="100%" height="100%" style={{ position: "absolute", opacity: 0.06 }}>
-          {Array.from({ length: 20 }, (_, i) => <line key={`h${i}`} x1="0" y1={i*14} x2="100%" y2={i*14} stroke="#000" strokeWidth="0.5"/>)}
-          {Array.from({ length: 25 }, (_, i) => <line key={`v${i}`} x1={i*14} y1="0" x2={i*14} y2="100%" stroke="#000" strokeWidth="0.5"/>)}
+      <Card className="s3" style={{ marginTop: 16, padding: 0, height: 300, position: "relative", overflow: "hidden", background: "#F5F6F8" }}>
+        {/* Grid background */}
+        <svg width="100%" height="100%" style={{ position: "absolute", opacity: 0.04 }}>
+          {Array.from({ length: 22 }, (_, i) => <line key={`h${i}`} x1="0" y1={i*14} x2="100%" y2={i*14} stroke="#000" strokeWidth="0.5"/>)}
+          {Array.from({ length: 26 }, (_, i) => <line key={`v${i}`} x1={i*14} y1="0" x2={i*14} y2="100%" stroke="#000" strokeWidth="0.5"/>)}
         </svg>
+        {/* Terminal floor plan */}
         <svg width="100%" height="100%" viewBox="0 0 100 100" style={{ position: "absolute" }}>
-          <path d="M10 20 L40 15 L60 15 L90 20 L92 40 L88 70 L70 80 L30 80 L12 70 L8 40 Z" fill="none" stroke="rgba(0,0,0,0.07)" strokeWidth="0.5"/>
-          <path d="M25 25 L45 22 L55 22 L75 25 L78 38 L75 58 L60 65 L40 65 L25 58 L22 38 Z" fill="rgba(0,0,0,0.015)" stroke="rgba(0,0,0,0.04)" strokeWidth="0.3"/>
-          <path d="M15 65 Q25 50 35 45 Q50 38 70 42 Q80 44 82 55" fill="none" stroke={T.accent} strokeWidth="0.6" strokeDasharray="2 2" opacity="0.35"/>
+          <rect x="10" y="20" width="80" height="55" rx="3" fill="rgba(0,0,0,0.02)" stroke="rgba(0,0,0,0.08)" strokeWidth="0.4"/>
+          <rect x="10" y="42" width="80" height="12" fill="rgba(0,0,0,0.015)" stroke="rgba(0,0,0,0.05)" strokeWidth="0.3"/>
+          {[15, 28, 41, 54, 67, 80].map((x, i) => (
+            <rect key={`gt${i}`} x={x} y="20" width="8" height="8" fill="rgba(0,0,0,0.02)" stroke="rgba(0,0,0,0.06)" strokeWidth="0.3"/>
+          ))}
+          {[15, 28, 41, 54, 67, 80].map((x, i) => (
+            <rect key={`gb${i}`} x={x} y="67" width="8" height="8" fill="rgba(0,0,0,0.02)" stroke="rgba(0,0,0,0.06)" strokeWidth="0.3"/>
+          ))}
+          <text x="20" y="18" fontSize="2.5" fill="rgba(0,0,0,0.25)" fontWeight="600">GATES 1-10</text>
+          <text x="62" y="18" fontSize="2.5" fill="rgba(0,0,0,0.25)" fontWeight="600">GATES 11-20</text>
+          <text x="42" y="40" fontSize="2.2" fill="rgba(0,0,0,0.2)" fontWeight="500">FOOD COURT</text>
+          <text x="12" y="50" fontSize="2.2" fill="rgba(0,0,0,0.2)" fontWeight="500">SECURITY</text>
+          <path id="routePath" d="M14 64 Q25 55 35 48 Q50 42 70 38 Q78 36 82 30" fill="none" stroke={T.accent} strokeWidth="0.8" opacity="0.3"/>
+          <circle r="1.5" fill={T.accent} opacity="0.8">
+            <animateMotion dur="3s" repeatCount="indefinite" path="M14 64 Q25 55 35 48 Q50 42 70 38 Q78 36 82 30"/>
+          </circle>
+          <text x="48" y="44" fontSize="2.8" fill={T.accent} fontWeight="700" textAnchor="middle">6 min</text>
         </svg>
-        <div style={{ position: "absolute", left: "11%", top: "61%", width: 28, height: 28, borderRadius: 14, background: T.blue, border: "3px solid #fff", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: `0 0 12px rgba(0,122,255,0.4)`, animation: "pulse 2s infinite", zIndex: 3 }}>
-          <div style={{ width: 6, height: 6, borderRadius: 3, background: "#fff" }}/>
+        {/* You are here */}
+        <div style={{ position: "absolute", left: "11%", top: "61%", zIndex: 3 }}>
+          <div style={{ width: 28, height: 28, borderRadius: 14, background: T.blue, border: "3px solid #fff", display: "flex", alignItems: "center", justifyContent: "center", boxShadow: "0 0 12px rgba(0,122,255,0.4)", animation: "pulse 2s infinite" }}>
+            <div style={{ width: 6, height: 6, borderRadius: 3, background: "#fff" }}/>
+          </div>
+          <div style={{ position: "absolute", top: -12, left: "50%", transform: "translateX(-50%) rotate(-30deg)", width: 0, height: 0, borderLeft: "6px solid transparent", borderRight: "6px solid transparent", borderBottom: "12px solid rgba(0,122,255,0.25)" }}/>
         </div>
         <p style={{ position: "absolute", left: "4%", top: "73%", fontSize: 10, color: T.blue, fontWeight: 700 }}>You</p>
-        {pois.map((p) => (
+        {/* POI markers */}
+        {filteredPois.map((p) => (
           <div key={p.id} onClick={() => setSel(p.id === sel ? null : p.id)} style={{ position: "absolute", left: `${p.x}%`, top: `${p.y}%`, transform: "translate(-50%,-50%)", cursor: "pointer", zIndex: 2 }}>
-            <div style={{ width: sel === p.id ? 32 : 22, height: sel === p.id ? 32 : 22, borderRadius: "50%", background: sel === p.id ? p.color : "#fff", border: `2.5px solid ${p.color}`, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.25s", boxShadow: sel === p.id ? `0 2px 10px ${p.color}44` : T.shadow }}>
-              {sel === p.id && <span style={{ fontSize: 10, color: "#fff", fontWeight: 800 }}>{p.label.charAt(0)}</span>}
+            <div style={{ width: sel === p.id ? 34 : 24, height: sel === p.id ? 34 : 24, borderRadius: "50%", background: sel === p.id ? p.color : "#fff", border: `2.5px solid ${p.color}`, display: "flex", alignItems: "center", justifyContent: "center", transition: "all 0.25s ease-out", boxShadow: sel === p.id ? `0 2px 10px ${p.color}44` : T.shadow }}>
+              <span style={{ fontSize: sel === p.id ? 12 : 10, color: sel === p.id ? "#fff" : p.color }}>{p.icon}</span>
             </div>
-            {sel === p.id && <div style={{ position: "absolute", top: "110%", left: "50%", transform: "translateX(-50%)", background: "#fff", border: `1px solid ${T.border}`, borderRadius: T.radiusSm, padding: "8px 14px", minWidth: 130, animation: "fadeIn 0.2s ease both", boxShadow: T.shadowMd, whiteSpace: "nowrap", zIndex: 10 }}>
+            {sel === p.id && <div style={{ position: "absolute", top: "110%", left: "50%", transform: "translateX(-50%)", background: "#fff", border: `1px solid ${T.border}`, borderRadius: T.radiusSm, padding: "10px 14px", minWidth: 150, animation: "fadeIn 0.2s ease-out both", boxShadow: T.shadowMd, whiteSpace: "nowrap", zIndex: 10 }}>
               <p style={{ fontSize: 13, fontWeight: 600, color: p.color }}>{p.label}</p>
               <p style={{ fontSize: 11, color: T.textMuted, marginTop: 2 }}>{p.desc}</p>
+              <div style={{ marginTop: 8, padding: "6px 12px", borderRadius: T.radiusSm, background: p.color, color: "#fff", fontSize: 11, fontWeight: 600, textAlign: "center", cursor: "pointer" }}>Navigate here</div>
             </div>}
           </div>
         ))}
@@ -543,6 +571,9 @@ const MapScreen = () => {
             <div key={p.id} style={{ display: "flex", alignItems: "center", gap: 14, padding: "14px 18px", borderBottom: idx < pois.slice(2).length - 1 ? `1px solid ${T.border}` : "none" }}>
               <div style={{ width: 10, height: 10, borderRadius: 5, background: p.color, flexShrink: 0 }}/>
               <div style={{ flex: 1 }}><p style={{ fontSize: 14, fontWeight: 600, color: T.text }}>{p.label}</p><p style={{ fontSize: 12, color: T.textMuted }}>{p.desc}</p></div>
+              <div style={{ textAlign: "right" }}>
+                <p style={{ fontSize: 12, fontWeight: 600, color: T.textSecondary }}>{p.walk}</p>
+              </div>
               <span style={{ color: T.textDim }}><Icons.Chevron /></span>
             </div>
           ))}
