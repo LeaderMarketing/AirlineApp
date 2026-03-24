@@ -901,9 +901,115 @@ const WrapScreen = () => {
   );
 };
 
+// ─── AI ASSISTANT ────────────────────────────────────────────────
+const AiAssistant = ({ screen, onClose }) => {
+  const [messages, setMessages] = useState([]);
+  const [inputVal, setInputVal] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+
+  const contextChips = {
+    home: ["What should I pack?", "Is my flight on time?", "Upgrade options"],
+    disruption: ["What are my rights?", "Find hotels nearby", "Will I miss my connection?"],
+    map: ["Where's the nearest lounge?", "How long to my gate?", "Best coffee nearby"],
+    boarding: ["Can I upgrade my seat?", "Meal options on my flight", "Wi-Fi info"],
+    timeline: ["Am I on track?", "What's the weather?", "Currency exchange tips"],
+    wrap: ["How do I offset more?", "Compare to last year", "Share options"],
+  };
+
+  const mockResponses = {
+    "What should I pack?": "Tokyo will be 12-16°C this week. I'd recommend light layers — a jacket, a couple of long sleeves, and comfortable walking shoes. Rain is unlikely but a compact umbrella won't hurt!",
+    "Is my flight on time?": "Yes! QF 71 is currently on schedule. Departure at 06:15 from Gate 14. I'd suggest arriving at ADL by 04:15 for a relaxed experience.",
+    "What are my rights?": "Under Australian Consumer Law, for a 2h+ delay you're entitled to meal vouchers, rebooking at no cost, and lounge access if available. I've already applied your entitlements.",
+    "Where's the nearest lounge?": "The Qantas Business Lounge is a 4-minute walk from your current location. Your Gold status grants you access. It closes 30 minutes before departure.",
+    "Can I upgrade my seat?": "There are 3 Premium Economy seats available on QF 71. An upgrade would be 12,400 points or $280 AUD. Would you like me to check availability?",
+    "Upgrade options": "There are 3 Premium Economy seats available on QF 71. An upgrade would be 12,400 points or $280 AUD. Would you like me to check availability?",
+    "Find hotels nearby": "Here are 3 options near ADL airport: Holiday Inn Express (0.5km, $129/night), Stamford Plaza ($189/night, 4-star), and ibis Budget ($89/night). Shall I book one?",
+    "How long to my gate?": "Gate 14 is a 6-minute walk from your current location. You have plenty of time — boarding doesn't begin for another 2 hours.",
+    "Best coffee nearby": "The Cafe & Bar is a 2-minute walk and serves excellent flat whites. There's also a Hudsons Coffee near Gate 10, about 4 minutes away.",
+    "Meal options on my flight": "QF 71 offers a complimentary meal service. Economy Plus includes a choice of chicken or vegetarian, plus snacks and drinks throughout the flight.",
+    "Wi-Fi info": "QF 71 has complimentary Wi-Fi for all passengers. Speeds are suitable for browsing and messaging. Streaming may be limited.",
+    "Will I miss my connection?": "Your NRT → KIX connection departs at 19:30 JST. With the current delay, you'll arrive at 20:10 — unfortunately this connection is at risk. I've found alternatives.",
+    "Am I on track?": "You're in great shape! Check-in is done, baggage is added. Just review your travel documents before departure.",
+    "What's the weather?": "Tokyo this week: 12-16°C, partly cloudy with low chance of rain. Pack light layers and comfortable shoes.",
+    "Currency exchange tips": "Current rate: ¥1 AUD = ¥97.2 JPY. Rates are favourable right now. I'd recommend exchanging at the airport or using your card for the best rates in Japan.",
+    "How do I offset more?": "You can offset additional flights retroactively through the Qantas app. Each offset earns bonus Frequent Flyer points!",
+    "Compare to last year": "In 2025 you flew 9 flights covering 31,200 km. This year you're up 33% in flights and 53% in distance!",
+    "Share options": "You can share your Trip Wrap as an image to Instagram Stories, LinkedIn, or save it to your camera roll. Tap the Share button below your wrap.",
+  };
+
+  const handleSend = (text) => {
+    const msg = text || inputVal;
+    if (!msg.trim()) return;
+    setMessages(prev => [...prev, { role: "user", text: msg }]);
+    setInputVal("");
+    setIsTyping(true);
+    setTimeout(() => {
+      setIsTyping(false);
+      const response = mockResponses[msg] || "I can help with that! Try tapping one of the suggested questions above for a detailed response.";
+      setMessages(prev => [...prev, { role: "assistant", text: response }]);
+    }, 1200);
+  };
+
+  const chips = contextChips[screen] || contextChips.home;
+
+  return (
+    <div style={{ position: "absolute", bottom: 84, left: 0, right: 0, top: "40%", background: "#fff", borderRadius: "20px 20px 0 0", boxShadow: "0 -4px 24px rgba(0,0,0,0.12)", display: "flex", flexDirection: "column", animation: "fadeIn 0.25s ease-out both", zIndex: 20 }}>
+      <div style={{ padding: "16px 20px", borderBottom: `1px solid ${T.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{ width: 28, height: 28, borderRadius: 14, background: T.accentSoft, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ color: T.accent }}><Icons.Sparkle /></span>
+          </div>
+          <span style={{ fontSize: 16, fontWeight: 600, color: T.text }}>Ask Qantas</span>
+        </div>
+        <span onClick={onClose} style={{ fontSize: 20, color: T.textMuted, cursor: "pointer", padding: 4 }}>✕</span>
+      </div>
+      <div style={{ flex: 1, overflowY: "auto", padding: "16px 20px" }}>
+        {messages.length === 0 && (
+          <div style={{ textAlign: "center", padding: "20px 0" }}>
+            <p style={{ fontSize: 14, color: T.textMuted }}>How can I help with your trip?</p>
+          </div>
+        )}
+        {messages.map((msg, i) => (
+          <div key={i} style={{ display: "flex", justifyContent: msg.role === "user" ? "flex-end" : "flex-start", marginBottom: 12, animation: "fadeIn 0.2s ease-out both" }}>
+            <div style={{
+              maxWidth: "80%", padding: "12px 16px", borderRadius: 16,
+              background: msg.role === "user" ? T.surfaceAlt : "#fff",
+              borderLeft: msg.role === "assistant" ? `3px solid ${T.accent}` : "none",
+              boxShadow: msg.role === "assistant" ? T.shadow : "none",
+            }}>
+              <p style={{ fontSize: 14, color: T.text, lineHeight: 1.5 }}>{msg.text}</p>
+            </div>
+          </div>
+        ))}
+        {isTyping && (
+          <div style={{ display: "flex", gap: 4, padding: "12px 16px", animation: "fadeIn 0.2s ease-out both" }}>
+            {[0, 1, 2].map(i => (
+              <div key={i} style={{ width: 7, height: 7, borderRadius: 4, background: T.textDim, animation: `typing 1s ease-in-out ${0.2*i}s infinite` }}/>
+            ))}
+          </div>
+        )}
+      </div>
+      {messages.length < 2 && (
+        <div style={{ padding: "0 20px 12px", display: "flex", gap: 8, overflowX: "auto" }}>
+          {chips.map((chip, i) => (
+            <span key={i} onClick={() => handleSend(chip)} style={{ padding: "8px 14px", borderRadius: 20, fontSize: 13, fontWeight: 500, background: T.surfaceAlt, color: T.textSecondary, whiteSpace: "nowrap", cursor: "pointer", border: `1px solid ${T.border}` }}>{chip}</span>
+          ))}
+        </div>
+      )}
+      <div style={{ padding: "12px 20px 16px", borderTop: `1px solid ${T.border}`, display: "flex", gap: 10 }}>
+        <input value={inputVal} onChange={e => setInputVal(e.target.value)} onKeyDown={e => e.key === "Enter" && handleSend()} placeholder="Ask anything..." style={{ flex: 1, height: 44, borderRadius: 22, border: `1px solid ${T.border}`, padding: "0 16px", fontSize: 14, fontFamily: fam, outline: "none" }}/>
+        <div onClick={() => handleSend()} style={{ width: 44, height: 44, borderRadius: 22, background: T.accent, display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", flexShrink: 0 }}>
+          <span style={{ color: "#fff" }}><Icons.ArrowRight /></span>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 // ─── MAIN ────────────────────────────────────────────────────────
 export default function App() {
   const [screen, setScreen] = useState("home");
+  const [aiOpen, setAiOpen] = useState(false);
   const scrollRef = useRef(null);
   const handleScreen = useCallback((s) => { setScreen(s); if (scrollRef.current) scrollRef.current.scrollTop = 0; }, []);
   const tabs = [
@@ -941,6 +1047,22 @@ export default function App() {
             {screen === "wrap" && <WrapScreen />}
           </div>
         </div>
+        {/* AI Assistant */}
+        {aiOpen && <AiAssistant screen={screen} onClose={() => setAiOpen(false)} />}
+        {/* FAB */}
+        {!aiOpen && (
+          <div onClick={() => setAiOpen(true)} style={{
+            position: "absolute", bottom: 96, right: 20,
+            width: 52, height: 52, borderRadius: 26,
+            background: T.accent, color: "#fff",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            boxShadow: "0 4px 16px rgba(225,8,31,0.35)",
+            cursor: "pointer", zIndex: 15,
+            animation: "fadeIn 0.3s ease-out both",
+          }}>
+            <Icons.Sparkle />
+          </div>
+        )}
         {/* Tab Bar */}
         <div style={{
           position: "absolute", bottom: 0, left: 0, right: 0, height: 84,
