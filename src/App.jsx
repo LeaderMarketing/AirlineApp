@@ -2,37 +2,42 @@ import { useState, useEffect, useRef, useCallback } from "react";
 
 // ─── QANTAS-INSPIRED DESIGN TOKENS ──────────────────────────────
 const T = {
-  bg: "#F2F2F7",
+  bg: "#F7F7F7",
   surface: "#FFFFFF",
-  surfaceAlt: "#F8F8FA",
+  surfaceAlt: "#F2F2F2",
   card: "#FFFFFF",
-  border: "rgba(0,0,0,0.06)",
-  text: "#1A1A1A",
-  textSecondary: "#3C3C43",
+  border: "#E5E5E5",
+  text: "#1F1F1F",
+  textSecondary: "#555555",
   textMuted: "#8E8E93",
   textDim: "#AEAEB2",
-  accent: "#E0001B",
-  accentSoft: "rgba(224,0,27,0.08)",
+  accent: "#E1081F",
+  accentDark: "#C10000",
+  accentDigital: "#DD0000",
+  accentSoft: "rgba(225,8,31,0.08)",
   green: "#34C759",
   greenSoft: "rgba(52,199,89,0.1)",
   blue: "#007AFF",
   blueSoft: "rgba(0,122,255,0.1)",
-  orange: "#FF9500",
-  orangeSoft: "rgba(255,149,0,0.1)",
+  orange: "#E86831",
+  orangeSoft: "rgba(232,104,49,0.1)",
+  wattle: "#FF9D2D",
   teal: "#5AC8FA",
   tealSoft: "rgba(90,200,250,0.1)",
   purple: "#AF52DE",
   purpleSoft: "rgba(175,82,222,0.1)",
   red: "#FF3B30",
   redSoft: "rgba(255,59,48,0.08)",
-  shadow: "0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04)",
-  shadowMd: "0 2px 8px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04)",
-  radius: "14px",
-  radiusSm: "10px",
+  shadow: "0 2px 8px rgba(0,0,0,0.08)",
+  shadowMd: "0 4px 16px rgba(0,0,0,0.1)",
+  shadowLg: "0 8px 24px rgba(0,0,0,0.12)",
+  radius: "12px",
+  radiusSm: "8px",
   radiusCard: "16px",
+  radiusXl: "24px",
 };
 
-const fam = `'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif`;
+const fam = `'Qantas Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif`;
 const fontMono = `'SF Mono', 'Menlo', monospace`;
 
 // ─── ICONS ───────────────────────────────────────────────────────
@@ -65,7 +70,30 @@ const Icons = {
 
 // ─── CSS ─────────────────────────────────────────────────────────
 const animCSS = `
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap');
+@font-face {
+  font-family: 'Qantas Sans';
+  src: url('https://www.qantas.com/fonts/QantasSans-Light.woff2') format('woff2');
+  font-weight: 300;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Qantas Sans';
+  src: url('https://www.qantas.com/fonts/QantasSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Qantas Sans';
+  src: url('https://www.qantas.com/fonts/QantasSans-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Qantas Sans';
+  src: url('https://www.qantas.com/fonts/QantasSans-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-display: swap;
+}
 * { box-sizing: border-box; margin: 0; padding: 0; -webkit-font-smoothing: antialiased; }
 @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes slideIn { from { opacity: 0; transform: translateX(-12px); } to { opacity: 1; transform: translateX(0); } }
@@ -75,13 +103,15 @@ const animCSS = `
 @keyframes planeFloat { 0%, 100% { transform: translateX(-4px); } 50% { transform: translateX(4px); } }
 @keyframes barGrow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
 @keyframes checkPop { 0% { transform: scale(0); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
-.s1 { animation: fadeIn 0.4s ease both 0.05s; }
-.s2 { animation: fadeIn 0.4s ease both 0.1s; }
-.s3 { animation: fadeIn 0.4s ease both 0.15s; }
-.s4 { animation: fadeIn 0.4s ease both 0.2s; }
-.s5 { animation: fadeIn 0.4s ease both 0.25s; }
-.s6 { animation: fadeIn 0.4s ease both 0.3s; }
-.s7 { animation: fadeIn 0.4s ease both 0.35s; }
+@keyframes dotTravel { 0% { offset-distance: 0%; } 100% { offset-distance: 100%; } }
+@keyframes typing { 0%, 80% { opacity: 0.3; } 40% { opacity: 1; } }
+.s1 { animation: fadeIn 0.3s ease-out both 0.05s; }
+.s2 { animation: fadeIn 0.3s ease-out both 0.1s; }
+.s3 { animation: fadeIn 0.3s ease-out both 0.15s; }
+.s4 { animation: fadeIn 0.3s ease-out both 0.2s; }
+.s5 { animation: fadeIn 0.3s ease-out both 0.25s; }
+.s6 { animation: fadeIn 0.3s ease-out both 0.3s; }
+.s7 { animation: fadeIn 0.3s ease-out both 0.35s; }
 ::-webkit-scrollbar { width: 0; height: 0; }
 `;
 
@@ -90,7 +120,7 @@ const Card = ({ children, style, onClick, className }) => (
   <div onClick={onClick} className={className} style={{
     background: T.card, borderRadius: T.radiusCard,
     boxShadow: T.shadow, cursor: onClick ? "pointer" : "default",
-    transition: "all 0.2s ease", ...style,
+    transition: "all 0.25s ease-out", ...style,
   }}>{children}</div>
 );
 
@@ -99,7 +129,7 @@ const Pill = ({ children, color = T.accent, style }) => (
     display: "inline-flex", alignItems: "center", gap: 4,
     padding: "4px 10px", borderRadius: 20,
     background: color === T.green ? T.greenSoft : color === T.accent ? T.accentSoft : color === T.blue ? T.blueSoft : color === T.orange ? T.orangeSoft : color === T.red ? T.redSoft : `${color}15`,
-    color, fontSize: 11, fontWeight: 600, ...style,
+    color, fontSize: 12, fontWeight: 600, ...style,
   }}>{children}</span>
 );
 
