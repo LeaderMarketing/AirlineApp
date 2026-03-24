@@ -45,7 +45,10 @@ const fam = `'Qantas Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe
 const fontMono = `'SF Mono', 'Menlo', monospace`;
 
 // ─── ICONS ───────────────────────────────────────────────────────
+const QANTAS_ROO_PATH = "M23.81 22.4798C23.8299 22.5 23.8498 22.5 23.87 22.5C23.91 22.5 23.9301 22.5 23.9701 22.4594C24.01 22.4188 24.01 22.3378 23.9701 22.2972C21.5898 19.7608 18.6695 17.7118 15.4091 16.3931C14.409 15.9873 14.409 15.9873 14.409 15.9873C13.8889 15.7638 13.5489 15.2568 13.5489 14.6684C13.6089 12.4975 18.6494 12.9439 19.1696 11.9091C19.2496 11.7265 19.2496 11.7265 19.2496 11.7265C18.2095 10.8134 16.9891 10.144 15.6292 9.75857C15.6093 9.81937 15.569 10.0628 15.849 10.5294C16.1494 11.0164 15.529 11.8077 14.609 10.9556C14.5289 10.8946 14.5289 10.8946 14.5289 10.8946C7.84823 4.68609 4.76809 8.7845 0.227613 1.56176C0.187582 1.50074 0.127649 1.48055 0.0674889 1.52115C0.00755533 1.56176 -0.0125733 1.62255 0.00755533 1.68335C3.58797 10.428 10.9087 8.5817 11.7688 16.7379C11.8088 17.0423 12.0289 17.2857 12.3288 17.3263C16.3891 17.9756 20.3497 19.6799 23.7901 22.4798H23.81Z";
+
 const Icons = {
+  Roo: ({ size = 24, color = "#E40000" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><path fillRule="evenodd" clipRule="evenodd" d={QANTAS_ROO_PATH} fill={color}/></svg>,
   Home: ({filled}) => filled ? <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg> : <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
   Timeline: ({filled}) => filled ? <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke="#fff" strokeWidth="2" strokeLinecap="round"/></svg> : <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
   Ticket: ({filled}) => filled ? <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M2 9a3 3 0 013-3h14a3 3 0 013 3 3 3 0 01-3 3 3 3 0 01-3 3H5a3 3 0 01-3-3V9z"/></svg> : <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M2 9a3 3 0 013-3h14a3 3 0 013 3 3 3 0 01-3 3 3 3 0 01-3 3H5a3 3 0 01-3-3V9z"/><path d="M13 6v12"/></svg>,
@@ -162,9 +165,12 @@ const HomeScreen = ({ setScreen }) => {
   <div style={{ padding: "0 20px 24px" }}>
     {/* Header */}
     <div className="s1" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "8px 0 24px" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 16px 8px 12px", borderRadius: 24, border: `1px solid ${T.border}`, background: T.card }}>
-        <Icons.Help />
-        <span style={{ fontSize: 14, fontWeight: 500, color: T.textSecondary }}>Help</span>
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <Icons.Roo size={28} />
+        <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 16px 8px 12px", borderRadius: 24, border: `1px solid ${T.border}`, background: T.card }}>
+          <Icons.Help />
+          <span style={{ fontSize: 14, fontWeight: 500, color: T.textSecondary }}>Help</span>
+        </div>
       </div>
       <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
         <span style={{ color: T.textMuted, position: "relative" }}>
@@ -181,7 +187,7 @@ const HomeScreen = ({ setScreen }) => {
 
     {/* Frequent Flyer CTA — matches Qantas style */}
     <Card className="s2" style={{ marginTop: 20, padding: "24px", textAlign: "center" }}>
-      <svg width="36" height="26" viewBox="0 0 40 28" fill={T.accent} style={{ marginBottom: 16 }}><path d="M20 0c-3 0-5.5 4-7 8l-1.5 4c-1.2 2.5-3 4.5-6 5.5-2 .8-4 .5-5-.5 2.5 3.5 5.5 4.5 8.5 3 2.5-1 4-3 5.5-5.5l1-2.5c1-2.5 2.5-5 4.5-5s3.5 2.5 4.5 5l1 2.5c1.5 2.5 3 4.5 5.5 5.5 3 1.5 6 .5 8.5-3-1 1-3 1.3-5 .5-3-1-4.8-3-6-5.5L26.5 8C25 4 22.5 0 20 0z"/></svg>
+      <div style={{ marginBottom: 16 }}><Icons.Roo size={36} /></div>
       <p style={{ fontSize: 17, fontWeight: 700, color: T.text }}>Your next flight awaits</p>
       <p style={{ fontSize: 13, color: T.textMuted, marginTop: 8, lineHeight: 1.5, maxWidth: 280, margin: "8px auto 0" }}>
         Manage your booked flights, check in, and access your boarding pass.
@@ -454,9 +460,7 @@ const BoardingScreen = () => {
         {/* Class indicator strip */}
         <div style={{ height: 3, background: T.accent }}/>
         {/* Kangaroo watermark */}
-        <svg width="120" height="80" viewBox="0 0 40 28" fill={T.accent} style={{ position: "absolute", right: 16, top: 40, opacity: 0.04 }}>
-          <path d="M20 0c-3 0-5.5 4-7 8l-1.5 4c-1.2 2.5-3 4.5-6 5.5-2 .8-4 .5-5-.5 2.5 3.5 5.5 4.5 8.5 3 2.5-1 4-3 5.5-5.5l1-2.5c1-2.5 2.5-5 4.5-5s3.5 2.5 4.5 5l1 2.5c1.5 2.5 3 4.5 5.5 5.5 3 1.5 6 .5 8.5-3-1 1-3 1.3-5 .5-3-1-4.8-3-6-5.5L26.5 8C25 4 22.5 0 20 0z"/>
-        </svg>
+        <div style={{ position: "absolute", right: 16, top: 40, opacity: 0.04 }}><Icons.Roo size={100} color={T.accent} /></div>
         <div style={{ padding: "24px 24px 20px" }}>
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <Pill color={T.green}><span style={{ width: 6, height: 6, borderRadius: 3, background: T.green, display: "inline-block" }}/> Ready to board</Pill>
@@ -887,7 +891,7 @@ const WrapScreen = () => {
         <SectionTitle>Share your wrap</SectionTitle>
         <Card style={{ padding: 0, overflow: "hidden" }}>
           <div style={{ padding: "24px 20px", background: "linear-gradient(135deg, #E1081F, #E86831)", color: "#fff", textAlign: "center" }}>
-            <svg width="28" height="20" viewBox="0 0 40 28" fill="#fff" style={{ marginBottom: 8 }}><path d="M20 0c-3 0-5.5 4-7 8l-1.5 4c-1.2 2.5-3 4.5-6 5.5-2 .8-4 .5-5-.5 2.5 3.5 5.5 4.5 8.5 3 2.5-1 4-3 5.5-5.5l1-2.5c1-2.5 2.5-5 4.5-5s3.5 2.5 4.5 5l1 2.5c1.5 2.5 3 4.5 5.5 5.5 3 1.5 6 .5 8.5-3-1 1-3 1.3-5 .5-3-1-4.8-3-6-5.5L26.5 8C25 4 22.5 0 20 0z"/></svg>
+            <div style={{ marginBottom: 8 }}><Icons.Roo size={28} color="#fff" /></div>
             <p style={{ fontSize: 18, fontWeight: 800 }}>My 2026 Trip Wrap</p>
             <div style={{ display: "flex", justifyContent: "center", gap: 20, marginTop: 16, fontSize: 13, fontWeight: 600 }}>
               <span>12 Flights</span><span>6 Countries</span><span>47,800 km</span>
@@ -961,7 +965,7 @@ const AiAssistant = ({ screen, onClose }) => {
       <div style={{ padding: "16px 20px", borderBottom: `1px solid ${T.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <div style={{ width: 28, height: 28, borderRadius: 14, background: T.accentSoft, display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ color: T.accent }}><Icons.Sparkle /></span>
+            <Icons.Roo size={16} />
           </div>
           <span style={{ fontSize: 16, fontWeight: 600, color: T.text }}>Ask Qantas</span>
         </div>
