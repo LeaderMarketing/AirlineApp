@@ -45,10 +45,14 @@ const fam = `'Qantas Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe
 const fontMono = `'SF Mono', 'Menlo', monospace`;
 
 // ─── ICONS ───────────────────────────────────────────────────────
-const QANTAS_ROO_PATH = "M23.81 22.4798C23.8299 22.5 23.8498 22.5 23.87 22.5C23.91 22.5 23.9301 22.5 23.9701 22.4594C24.01 22.4188 24.01 22.3378 23.9701 22.2972C21.5898 19.7608 18.6695 17.7118 15.4091 16.3931C14.409 15.9873 14.409 15.9873 14.409 15.9873C13.8889 15.7638 13.5489 15.2568 13.5489 14.6684C13.6089 12.4975 18.6494 12.9439 19.1696 11.9091C19.2496 11.7265 19.2496 11.7265 19.2496 11.7265C18.2095 10.8134 16.9891 10.144 15.6292 9.75857C15.6093 9.81937 15.569 10.0628 15.849 10.5294C16.1494 11.0164 15.529 11.8077 14.609 10.9556C14.5289 10.8946 14.5289 10.8946 14.5289 10.8946C7.84823 4.68609 4.76809 8.7845 0.227613 1.56176C0.187582 1.50074 0.127649 1.48055 0.0674889 1.52115C0.00755533 1.56176 -0.0125733 1.62255 0.00755533 1.68335C3.58797 10.428 10.9087 8.5817 11.7688 16.7379C11.8088 17.0423 12.0289 17.2857 12.3288 17.3263C16.3891 17.9756 20.3497 19.6799 23.7901 22.4798H23.81Z";
+const ROO_URL = "https://www.qantas.com/icons/runway_icon_roo.svg";
+const QI_BASE = "https://www.qantas.com/icons/";
+const QantasIcon = ({ name, size = 24, style }) => (
+  <img src={`${QI_BASE}${name}.svg`} width={size} height={size} alt="" style={{ display: "block", ...style }} />
+);
 
 const Icons = {
-  Roo: ({ size = 24, color = "#E40000" }) => <svg width={size} height={size} viewBox="0 0 24 24" fill="none"><path fillRule="evenodd" clipRule="evenodd" d={QANTAS_ROO_PATH} fill={color}/></svg>,
+  Roo: ({ size = 24, color }) => <img src={ROO_URL} width={size} height={size} alt="Qantas" style={{ display: "block", ...(color === "#fff" || color === "white" ? { filter: "brightness(0) invert(1)" } : {}) }} />,
   Home: ({filled}) => filled ? <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg> : <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>,
   Timeline: ({filled}) => filled ? <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2" stroke="#fff" strokeWidth="2" strokeLinecap="round"/></svg> : <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
   Ticket: ({filled}) => filled ? <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M2 9a3 3 0 013-3h14a3 3 0 013 3 3 3 0 01-3 3 3 3 0 01-3 3H5a3 3 0 01-3-3V9z"/></svg> : <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M2 9a3 3 0 013-3h14a3 3 0 013 3 3 3 0 01-3 3 3 3 0 01-3 3H5a3 3 0 01-3-3V9z"/><path d="M13 6v12"/></svg>,
@@ -112,6 +116,12 @@ const animCSS = `
 @keyframes checkPop { 0% { transform: scale(0); } 50% { transform: scale(1.15); } 100% { transform: scale(1); } }
 @keyframes dotTravel { 0% { offset-distance: 0%; } 100% { offset-distance: 100%; } }
 @keyframes typing { 0%, 80% { opacity: 0.3; } 40% { opacity: 1; } }
+@keyframes sparkleRotate { 0% { transform: rotate(0deg) scale(1); } 25% { transform: rotate(90deg) scale(1.15); } 50% { transform: rotate(180deg) scale(1); } 75% { transform: rotate(270deg) scale(1.15); } 100% { transform: rotate(360deg) scale(1); } }
+@keyframes fabGlow { 0%, 100% { box-shadow: 0 4px 16px rgba(228,0,0,0.35), 0 0 20px rgba(228,0,0,0.1); } 50% { box-shadow: 0 4px 24px rgba(228,0,0,0.55), 0 0 40px rgba(228,0,0,0.2); } }
+@keyframes fabRing { 0% { transform: scale(1); opacity: 0.4; } 100% { transform: scale(2.2); opacity: 0; } }
+@keyframes orbiter1 { 0% { transform: rotate(0deg) translateX(30px) rotate(0deg); } 100% { transform: rotate(360deg) translateX(30px) rotate(-360deg); } }
+@keyframes orbiter2 { 0% { transform: rotate(120deg) translateX(30px) rotate(-120deg); } 100% { transform: rotate(480deg) translateX(30px) rotate(-480deg); } }
+@keyframes orbiter3 { 0% { transform: rotate(240deg) translateX(30px) rotate(-240deg); } 100% { transform: rotate(600deg) translateX(30px) rotate(-600deg); } }
 .s1 { animation: fadeIn 0.3s ease-out both 0.05s; }
 .s2 { animation: fadeIn 0.3s ease-out both 0.1s; }
 .s3 { animation: fadeIn 0.3s ease-out both 0.15s; }
@@ -309,16 +319,16 @@ const HomeScreen = ({ setScreen }) => {
       <SectionTitle>Book and explore</SectionTitle>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
         {[
-          { icon: <Icons.Ticket filled={false} />, label: "Boarding\nPass", screen: "boarding" },
-          { icon: <Icons.Map filled={false} />, label: "Airport\nMap", screen: "map" },
-          { icon: <Icons.Users />, label: "Travel\nGroup", screen: null },
-          { icon: <Icons.Wrap filled={false} />, label: "Trip\nWrap", screen: "wrap" },
+          { icon: <QantasIcon name="runway_pictogram_boarding_pass" size={28} />, label: "Boarding\nPass", screen: "boarding" },
+          { icon: <QantasIcon name="runway_pictogram_location" size={28} />, label: "Airport\nMap", screen: "map" },
+          { icon: <QantasIcon name="runway_pictogram_group" size={28} />, label: "Travel\nGroup", screen: null },
+          { icon: <QantasIcon name="runway_pictogram_world_map_with_destinations" size={28} />, label: "Trip\nWrap", screen: "wrap" },
         ].map((a, i) => (
           <Card key={i} onClick={() => a.screen && setScreen(a.screen)} style={{
             display: "flex", flexDirection: "column", alignItems: "center",
             justifyContent: "center", gap: 12, padding: "20px 8px",
           }}>
-            <div style={{ color: T.textSecondary }}>{a.icon}</div>
+            <div>{a.icon}</div>
             <p style={{ fontSize: 11, color: T.textSecondary, textAlign: "center", lineHeight: 1.35, whiteSpace: "pre-line", fontWeight: 500 }}>{a.label}</p>
           </Card>
         ))}
@@ -522,9 +532,9 @@ const BoardingScreen = () => {
       <div className="s4" style={{ marginTop: 20 }}>
         <SectionTitle>Seat amenities</SectionTitle>
         <div style={{ display: "flex", gap: 8 }}>
-          {[{ icon: <Icons.Wifi />, l: "Wi-Fi" }, { icon: <Icons.Zap />, l: "Power" }, { icon: <Icons.Coffee />, l: "Meals" }, { icon: <Icons.Star />, l: "Extra leg" }].map((a, i) => (
+          {[{ icon: <QantasIcon name="runway_pictogram_wifi" size={22} />, l: "Wi-Fi" }, { icon: <QantasIcon name="runway_pictogram_power" size={22} />, l: "Power" }, { icon: <QantasIcon name="runway_pictogram_meal" size={22} />, l: "Meals" }, { icon: <QantasIcon name="runway_pictogram_seat" size={22} />, l: "Extra leg" }].map((a, i) => (
             <Card key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, padding: "16px 8px" }}>
-              <span style={{ color: T.accent }}>{a.icon}</span>
+              {a.icon}
               <p style={{ fontSize: 11, color: T.textMuted, fontWeight: 500 }}>{a.l}</p>
             </Card>
           ))}
@@ -549,12 +559,12 @@ const MapScreen = () => {
   const [sel, setSel] = useState(null);
   const [filter, setFilter] = useState("All");
   const pois = [
-    { id: 1, x: 82, y: 28, label: "Gate 14", desc: "Your gate · 6 min walk", color: T.accent, icon: <Icons.Plane />, walk: "6 min", category: "Gates" },
-    { id: 2, x: 58, y: 24, label: "Qantas Lounge", desc: "Level 1 · Gold access", color: T.purple, icon: <Icons.Star />, walk: "4 min", category: "Lounges" },
-    { id: 3, x: 42, y: 36, label: "Cafe & Bar", desc: "Coffee, snacks · Open", color: T.green, icon: <Icons.Coffee />, walk: "2 min", category: "Food" },
-    { id: 4, x: 70, y: 48, label: "Charging Hub", desc: "USB-C + wireless", color: T.blue, icon: <Icons.Zap />, walk: "5 min", category: "Charging" },
-    { id: 5, x: 14, y: 48, label: "Security", desc: "~8 min current wait", color: T.orange, icon: <Icons.Shield />, walk: "1 min", category: "Other" },
-    { id: 6, x: 52, y: 62, label: "Duty Free", desc: "Open until 05:45", color: T.wattle, icon: <Icons.Globe />, walk: "3 min", category: "Other" },
+    { id: 1, x: 82, y: 28, label: "Gate 14", desc: "Your gate · 6 min walk", color: T.accent, icon: <QantasIcon name="runway_pictogram_plane_tail_red" size={14} />, walk: "6 min", category: "Gates" },
+    { id: 2, x: 58, y: 24, label: "Qantas Lounge", desc: "Level 1 · Gold access", color: T.purple, icon: <QantasIcon name="runway_pictogram_lounge" size={14} />, walk: "4 min", category: "Lounges" },
+    { id: 3, x: 42, y: 36, label: "Cafe & Bar", desc: "Coffee, snacks · Open", color: T.green, icon: <QantasIcon name="runway_pictogram_meal" size={14} />, walk: "2 min", category: "Food" },
+    { id: 4, x: 70, y: 48, label: "Charging Hub", desc: "USB-C + wireless", color: T.blue, icon: <QantasIcon name="runway_pictogram_power" size={14} />, walk: "5 min", category: "Charging" },
+    { id: 5, x: 14, y: 48, label: "Security", desc: "~8 min current wait", color: T.orange, icon: <QantasIcon name="runway_pictogram_security" size={14} />, walk: "1 min", category: "Other" },
+    { id: 6, x: 52, y: 62, label: "Duty Free", desc: "Open until 05:45", color: T.wattle, icon: <QantasIcon name="runway_pictogram_shopping" size={14} />, walk: "3 min", category: "Other" },
   ];
   const filteredPois = filter === "All" ? pois : pois.filter(p => p.category === filter);
   const filterCounts = { "Gates": pois.filter(p => p.category === "Gates").length, "Food": pois.filter(p => p.category === "Food").length, "Lounges": pois.filter(p => p.category === "Lounges").length, "Charging": pois.filter(p => p.category === "Charging").length };
@@ -728,25 +738,28 @@ const DisruptionScreen = ({ setScreen }) => {
       </div>
       <div className="s4" style={{ marginTop: 24 }}>
         <SectionTitle>Your entitlements</SectionTitle>
-        <Card style={{ padding: 0, overflow: "hidden" }}>
+        <div style={{ display: "flex", gap: 12, overflowX: "auto", paddingBottom: 8, margin: "0 -20px", padding: "0 20px 8px" }}>
           {[
-            { l: "Meal voucher", v: "$25 AUD", icon: <Icons.Coffee />, expiry: "Valid until boarding" },
-            { l: "Lounge access", v: "Granted", icon: <Icons.Star />, expiry: "Gate 14 area" },
-            { l: "Wi-Fi credit", v: "Complimentary", icon: <Icons.Wifi />, expiry: "On board QF 73" },
+            { l: "Meal voucher", v: "$25 AUD", expiry: "Valid until boarding", img: "https://www.qantas.com/content/dam/qantas/aircraft/aircraft-internal/a380-economy-food-beverage-ife.jpg/jcr:content/renditions/article.tablet.small.jpg" },
+            { l: "Lounge access", v: "Granted", expiry: "Gate 14 area", img: "https://www.qantas.com/content/dam/qantas/merchandising/loyalty/female-enjoying-drink-qantas-lounge.jpg/_jcr_content/renditions/article.tablet.small.jpg" },
+            { l: "Wi-Fi credit", v: "Complimentary", expiry: "On board QF 73", img: "https://www.qantas.com/content/dam/qantas/aircraft/aircraft-internal/a220/a220-economy-female-ipad.jpg/jcr:content/renditions/article.tablet.small.jpg" },
           ].map((e, i) => (
-            <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: "16px 20px", borderBottom: i < 2 ? `1px solid ${T.border}` : "none" }}>
-              <div style={{ width: 34, height: 34, borderRadius: 17, background: T.accentSoft, display: "flex", alignItems: "center", justifyContent: "center", color: T.accent }}>{e.icon}</div>
-              <div style={{ flex: 1 }}>
-                <span style={{ fontSize: 14, color: T.text, fontWeight: 500 }}>{e.l}</span>
-                <p style={{ fontSize: 11, color: T.textMuted, marginTop: 2 }}>{e.expiry}</p>
+            <Card key={i} style={{ minWidth: 200, flex: "0 0 auto", padding: 0, overflow: "hidden" }}>
+              <img src={e.img} alt={e.l} style={{ width: "100%", height: 120, objectFit: "cover", display: "block" }} />
+              <div style={{ padding: "14px 16px" }}>
+                <p style={{ fontSize: 14, fontWeight: 600, color: T.text }}>{e.l}</p>
+                <p style={{ fontSize: 13, fontWeight: 700, color: T.accent, marginTop: 4 }}>{e.v}</p>
+                <p style={{ fontSize: 11, color: T.textMuted, marginTop: 4 }}>{e.expiry}</p>
+                <div style={{ marginTop: 12, padding: "8px 16px", borderRadius: T.radiusSm, background: T.greenSoft, color: T.green, fontSize: 13, fontWeight: 600, cursor: "pointer", textAlign: "center" }}>Claim</div>
               </div>
-              <div style={{ padding: "8px 16px", borderRadius: T.radiusSm, background: T.greenSoft, color: T.green, fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Claim</div>
-            </div>
+            </Card>
           ))}
-        </Card>
+        </div>
       </div>
       <Card className="s5" style={{ marginTop: 16, padding: "16px 20px", display: "flex", alignItems: "center", gap: 12, cursor: "pointer" }}>
-        <div style={{ width: 38, height: 38, borderRadius: 19, background: T.purpleSoft, display: "flex", alignItems: "center", justifyContent: "center", color: T.purple }}><Icons.Sparkle /></div>
+        <div style={{ width: 38, height: 38, borderRadius: 19, background: `radial-gradient(circle at 40% 40%, #FF4D4D, ${T.accent})`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="#fff" style={{ animation: "sparkleRotate 4s linear infinite" }}><path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z"/></svg>
+        </div>
         <div><p style={{ fontSize: 15, fontWeight: 600, color: T.text }}>Need help? Ask your AI assistant</p><p style={{ fontSize: 12, color: T.textMuted }}>"What are my rights?" · "Hotel options nearby"</p></div>
       </Card>
     </div>
@@ -961,7 +974,7 @@ const AiAssistant = ({ screen, onClose }) => {
   const chips = contextChips[screen] || contextChips.home;
 
   return (
-    <div style={{ position: "absolute", bottom: 84, left: 0, right: 0, top: "40%", background: "#fff", borderRadius: "20px 20px 0 0", boxShadow: "0 -4px 24px rgba(0,0,0,0.12)", display: "flex", flexDirection: "column", animation: "fadeIn 0.25s ease-out both", zIndex: 20 }}>
+    <div style={{ position: "absolute", bottom: 88, left: 0, right: 0, top: "40%", background: "#fff", borderRadius: "20px 20px 0 0", boxShadow: "0 -4px 24px rgba(0,0,0,0.12)", display: "flex", flexDirection: "column", animation: "fadeIn 0.25s ease-out both", zIndex: 20 }}>
       <div style={{ padding: "16px 20px", borderBottom: `1px solid ${T.border}`, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
           <div style={{ width: 28, height: 28, borderRadius: 14, background: T.accentSoft, display: "flex", alignItems: "center", justifyContent: "center" }}>
@@ -1045,7 +1058,7 @@ export default function App() {
           </div>
         </div>
         {/* Content */}
-        <div ref={scrollRef} style={{ height: "calc(100% - 48px - 84px)", overflowY: "auto", scrollBehavior: "smooth" }}>
+        <div ref={scrollRef} style={{ height: "calc(100% - 48px - 88px)", overflowY: "auto", scrollBehavior: "smooth" }}>
           <div key={screen} style={{ animation: "fadeIn 0.3s ease both", paddingBottom: 20 }}>
             {screen === "home" && <HomeScreen setScreen={handleScreen} />}
             {screen === "timeline" && <TimelineScreen setScreen={handleScreen} />}
@@ -1057,37 +1070,57 @@ export default function App() {
         </div>
         {/* AI Assistant */}
         {aiOpen && <AiAssistant screen={screen} onClose={() => setAiOpen(false)} />}
-        {/* FAB */}
+        {/* AI FAB — animated "alive" button */}
         {!aiOpen && (
           <div onClick={() => setAiOpen(true)} style={{
             position: "absolute", bottom: 96, right: 20,
-            width: 52, height: 52, borderRadius: 26,
-            background: T.accent, color: "#fff",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            boxShadow: "0 4px 16px rgba(225,8,31,0.35)",
-            cursor: "pointer", zIndex: 15,
+            width: 56, height: 56, cursor: "pointer", zIndex: 15,
             animation: "fadeIn 0.3s ease-out both",
           }}>
-            <Icons.Sparkle />
+            {/* Pulsing ring */}
+            <div style={{ position: "absolute", inset: 0, borderRadius: 28, border: `2px solid ${T.accent}`, animation: "fabRing 2s ease-out infinite" }} />
+            {/* Orbiting particles */}
+            <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div style={{ width: 4, height: 4, borderRadius: 2, background: "#fff", position: "absolute", animation: "orbiter1 3s linear infinite", opacity: 0.8 }} />
+              <div style={{ width: 3, height: 3, borderRadius: 2, background: "#FF9D2D", position: "absolute", animation: "orbiter2 3s linear infinite", opacity: 0.7 }} />
+              <div style={{ width: 3, height: 3, borderRadius: 2, background: "#fff", position: "absolute", animation: "orbiter3 3s linear infinite", opacity: 0.6 }} />
+            </div>
+            {/* Main button */}
+            <div style={{
+              position: "absolute", inset: 0, borderRadius: 28,
+              background: `radial-gradient(circle at 40% 40%, #FF4D4D, ${T.accent} 60%, #B30000)`,
+              display: "flex", alignItems: "center", justifyContent: "center",
+              boxShadow: "0 4px 16px rgba(228,0,0,0.35), 0 0 20px rgba(228,0,0,0.1)",
+              animation: "fabGlow 2.5s ease-in-out infinite",
+            }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" style={{ animation: "sparkleRotate 4s linear infinite" }}>
+                <path d="M12 2l2.4 7.2L22 12l-7.6 2.8L12 22l-2.4-7.2L2 12l7.6-2.8L12 2z"/>
+              </svg>
+            </div>
           </div>
         )}
-        {/* Tab Bar */}
+        {/* Tab Bar — Island / Glass */}
         <div style={{
-          position: "absolute", bottom: 0, left: 0, right: 0, height: 84,
-          padding: "8px 8px 24px", background: "#FFFFFF",
-          borderTop: `0.5px solid rgba(0,0,0,0.12)`,
-          display: "flex", justifyContent: "space-around", alignItems: "flex-start",
+          position: "absolute", bottom: 12, left: 16, right: 16, height: 64,
+          padding: "0 4px",
+          background: "rgba(255,255,255,0.82)",
+          backdropFilter: "blur(24px) saturate(1.8)", WebkitBackdropFilter: "blur(24px) saturate(1.8)",
+          borderRadius: 32,
+          border: "0.5px solid rgba(255,255,255,0.6)",
+          boxShadow: "0 4px 24px rgba(0,0,0,0.08), 0 1px 3px rgba(0,0,0,0.04), inset 0 0.5px 0 rgba(255,255,255,0.8)",
+          display: "flex", justifyContent: "space-around", alignItems: "center",
         }}>
           {tabs.map(({ id, label, Icon }) => {
             const active = screen === id;
             return (
               <div key={id} onClick={() => handleScreen(id)} style={{
-                display: "flex", flexDirection: "column", alignItems: "center", gap: 4,
-                cursor: "pointer", padding: "8px 16px", borderRadius: 16, position: "relative",
+                display: "flex", flexDirection: "column", alignItems: "center", gap: 3,
+                cursor: "pointer", padding: "8px 12px", borderRadius: 20, position: "relative",
+                transition: "all 0.2s ease",
               }}>
-                {active && <div style={{ position: "absolute", inset: "2px 4px", background: T.accentSoft, borderRadius: 12 }}/>}
-                <span style={{ color: active ? T.accent : T.textMuted, position: "relative", zIndex: 1 }}><Icon filled={active} /></span>
-                <span style={{ fontSize: 10, fontWeight: active ? 600 : 500, color: active ? T.accent : T.textMuted, position: "relative", zIndex: 1 }}>{label}</span>
+                {active && <div style={{ position: "absolute", inset: "2px 4px", background: T.accentSoft, borderRadius: 16, transition: "all 0.2s ease" }}/>}
+                <span style={{ color: active ? T.accent : T.textMuted, position: "relative", zIndex: 1, transition: "color 0.2s ease" }}><Icon filled={active} /></span>
+                <span style={{ fontSize: 10, fontWeight: active ? 600 : 500, color: active ? T.accent : T.textMuted, position: "relative", zIndex: 1, transition: "color 0.2s ease" }}>{label}</span>
               </div>
             );
           })}
