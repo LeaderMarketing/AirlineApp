@@ -589,15 +589,30 @@ const DisruptionScreen = ({ setScreen }) => {
   return (
     <div style={{ padding: "0 20px 24px" }}>
       <div className="s1" style={{ padding: "6px 0 4px" }}>
-        <h1 style={{ fontSize: 30, fontWeight: 700, color: T.text, fontFamily: fam }}>Flight Update</h1>
+        <p style={{ fontSize: 13, color: T.textSecondary, fontWeight: 500 }}>We're taking care of this</p>
+        <h1 style={{ fontSize: 30, fontWeight: 700, color: T.text, fontFamily: fam, marginTop: 4 }}>Flight Update</h1>
       </div>
-      <Card className="s2" style={{ marginTop: 16, padding: "20px", border: `1.5px solid ${T.red}30` }}>
+      <Card className="s2" style={{ marginTop: 16, padding: "20px", border: `1.5px solid ${T.orange}30`, background: "linear-gradient(135deg, #FFFBF7, #FFFFFF)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
-          <div style={{ width: 10, height: 10, borderRadius: 5, background: T.red, animation: "pulse 1.5s infinite" }}/>
-          <Pill color={T.red}>Delay · 2h 15m</Pill>
+          <div style={{ width: 10, height: 10, borderRadius: 5, background: T.orange, animation: "pulse 2.5s infinite" }}/>
+          <Pill color={T.orange}>Delay · 2h 15m</Pill>
         </div>
         <p style={{ fontSize: 17, fontWeight: 600, color: T.text }}>QF 71 is delayed due to weather</p>
-        <p style={{ fontSize: 14, color: T.textMuted, marginTop: 6, lineHeight: 1.5 }}>New departure: <strong style={{ color: T.text }}>08:30 ACST</strong> (was 06:15). Gate unchanged.</p>
+        <div style={{ marginTop: 12, display: "flex", alignItems: "center", gap: 12 }}>
+          <div>
+            <p style={{ fontSize: 12, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.04em" }}>Original</p>
+            <p style={{ fontSize: 16, fontWeight: 600, color: T.textMuted, textDecoration: "line-through", marginTop: 4 }}>06:15 ACST</p>
+          </div>
+          <span style={{ color: T.textDim, fontSize: 18 }}>→</span>
+          <div>
+            <p style={{ fontSize: 12, color: T.orange, textTransform: "uppercase", letterSpacing: "0.04em", fontWeight: 600 }}>Updated</p>
+            <p style={{ fontSize: 16, fontWeight: 700, color: T.text, marginTop: 4 }}>08:30 ACST</p>
+          </div>
+        </div>
+        <div style={{ marginTop: 14, padding: "10px 14px", borderRadius: T.radiusSm, background: T.greenSoft, display: "flex", alignItems: "center", gap: 8 }}>
+          <span style={{ color: T.green }}><Icons.Check /></span>
+          <span style={{ fontSize: 13, color: T.green, fontWeight: 500 }}>Your gate is unchanged · Gate 14</span>
+        </div>
       </Card>
       <div className="s3" style={{ marginTop: 24 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 14 }}>
@@ -607,9 +622,9 @@ const DisruptionScreen = ({ setScreen }) => {
         {!accepted ? (
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {[
-              { flight: "QF 73", time: "09:45", arr: "20:10 JST", badge: "Recommended", bc: T.green, price: "No extra cost", seat: "12C · Aisle" },
-              { flight: "JL 772", time: "11:00", arr: "21:25 JST", badge: "Codeshare", bc: T.blue, price: "+$0 (partner)", seat: "23A · Window" },
-              { flight: "QF 79", time: "14:30", arr: "01:55+1 JST", badge: "Next day arr.", bc: T.textMuted, price: "No extra cost", seat: "8F · Window" },
+              { flight: "QF 73", time: "09:45", arr: "20:10 JST", badge: "Recommended", reason: "Earliest arrival, similar seat", bc: T.green, price: "No extra cost", seat: "12C · Aisle" },
+              { flight: "JL 772", time: "11:00", arr: "21:25 JST", badge: "Codeshare", reason: "Partner airline, window available", bc: T.blue, price: "+$0 (partner)", seat: "23A · Window" },
+              { flight: "QF 79", time: "14:30", arr: "01:55+1 JST", badge: "Next day arr.", reason: "Latest option, premium seat", bc: T.textMuted, price: "No extra cost", seat: "8F · Window" },
             ].map((o, i) => (
               <Card key={i} onClick={() => i === 0 && setAccepted(true)} style={{ padding: 18, cursor: i === 0 ? "pointer" : "default", border: i === 0 ? `1.5px solid ${T.green}40` : "none" }}>
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -619,32 +634,52 @@ const DisruptionScreen = ({ setScreen }) => {
                   </div>
                   <span style={{ fontSize: 13, color: T.green, fontWeight: 600 }}>{o.price}</span>
                 </div>
+                {i === 0 && <p style={{ fontSize: 12, color: T.green, marginTop: 6 }}>{o.reason}</p>}
                 <div style={{ display: "flex", gap: 24, marginTop: 14 }}>
                   {[{ l: "Depart", v: o.time }, { l: "Arrive", v: o.arr }, { l: "Seat", v: o.seat }].map((d, j) => (
                     <div key={j}><p style={{ fontSize: 10, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.04em" }}>{d.l}</p><p style={{ fontSize: 14, fontWeight: 600, color: T.text, marginTop: 4 }}>{d.v}</p></div>
                   ))}
                 </div>
-                {i === 0 && <div style={{ marginTop: 16, padding: "13px", borderRadius: T.radiusSm, background: T.accent, textAlign: "center", fontSize: 15, fontWeight: 600, color: "#fff" }}>Tap to accept this flight</div>}
+                {i === 0 && <div style={{ marginTop: 16, padding: "16px", height: 56, borderRadius: T.radius, background: T.accent, textAlign: "center", fontSize: 17, fontWeight: 500, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center" }}>Accept this flight</div>}
               </Card>
             ))}
+            <Card style={{ padding: 16, textAlign: "center", cursor: "pointer", marginTop: 4 }}>
+              <p style={{ fontSize: 15, fontWeight: 600, color: T.textSecondary }}>Keep current flight (08:30 departure)</p>
+            </Card>
           </div>
         ) : (
-          <Card style={{ textAlign: "center", padding: "40px 20px", border: `1.5px solid ${T.green}30` }}>
-            <div style={{ width: 56, height: 56, borderRadius: 28, background: T.green, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 18px", animation: "checkPop 0.5s ease both" }}><Icons.CheckBig /></div>
-            <p style={{ fontSize: 22, fontWeight: 700, color: T.text, fontFamily: fam }}>Rebooked successfully</p>
-            <p style={{ fontSize: 14, color: T.textMuted, marginTop: 8 }}>QF 73 · Departing 09:45 · Seat 12C</p>
-            <p style={{ fontSize: 14, color: T.green, fontWeight: 600, marginTop: 10 }}>Your boarding pass has been updated</p>
+          <Card style={{ padding: "32px 20px", border: `1.5px solid ${T.green}30` }}>
+            <div style={{ textAlign: "center" }}>
+              <div style={{ width: 56, height: 56, borderRadius: 28, background: T.green, display: "flex", alignItems: "center", justifyContent: "center", margin: "0 auto 18px", animation: "checkPop 0.5s ease both" }}><Icons.CheckBig /></div>
+              <p style={{ fontSize: 22, fontWeight: 700, color: T.text, fontFamily: fam }}>Rebooked successfully</p>
+              <p style={{ fontSize: 14, color: T.textMuted, marginTop: 8 }}>QF 73 · Departing 09:45 · Seat 12C</p>
+              <p style={{ fontSize: 14, color: T.green, fontWeight: 600, marginTop: 6 }}>Boarding pass updated automatically</p>
+            </div>
+            <div style={{ marginTop: 24, padding: "14px 16px", borderRadius: T.radiusSm, background: T.surfaceAlt }}>
+              <p style={{ fontSize: 13, fontWeight: 600, color: T.text, marginBottom: 8 }}>What to do now</p>
+              <p style={{ fontSize: 13, color: T.textSecondary, lineHeight: 1.5 }}>Your gate hasn't changed. Enjoy complimentary lounge access while you wait. Your checked baggage has been transferred automatically.</p>
+            </div>
+            <div onClick={() => setScreen("boarding")} style={{ marginTop: 16, padding: "16px", height: 56, borderRadius: T.radius, background: T.accent, textAlign: "center", fontSize: 17, fontWeight: 500, color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer" }}>
+              View updated boarding pass
+            </div>
           </Card>
         )}
       </div>
       <div className="s4" style={{ marginTop: 24 }}>
         <SectionTitle>Your entitlements</SectionTitle>
         <Card style={{ padding: 0, overflow: "hidden" }}>
-          {[{ l: "Meal voucher", v: "$25 AUD", icon: <Icons.Coffee /> }, { l: "Lounge access", v: "Granted", icon: <Icons.Star /> }, { l: "Wi-Fi credit", v: "Complimentary", icon: <Icons.Wifi /> }].map((e, i) => (
+          {[
+            { l: "Meal voucher", v: "$25 AUD", icon: <Icons.Coffee />, expiry: "Valid until boarding" },
+            { l: "Lounge access", v: "Granted", icon: <Icons.Star />, expiry: "Gate 14 area" },
+            { l: "Wi-Fi credit", v: "Complimentary", icon: <Icons.Wifi />, expiry: "On board QF 73" },
+          ].map((e, i) => (
             <div key={i} style={{ display: "flex", alignItems: "center", gap: 14, padding: "15px 18px", borderBottom: i < 2 ? `1px solid ${T.border}` : "none" }}>
               <div style={{ width: 34, height: 34, borderRadius: 17, background: T.accentSoft, display: "flex", alignItems: "center", justifyContent: "center", color: T.accent }}>{e.icon}</div>
-              <span style={{ fontSize: 14, color: T.text, flex: 1, fontWeight: 500 }}>{e.l}</span>
-              <span style={{ fontSize: 14, fontWeight: 600, color: T.green }}>{e.v}</span>
+              <div style={{ flex: 1 }}>
+                <span style={{ fontSize: 14, color: T.text, fontWeight: 500 }}>{e.l}</span>
+                <p style={{ fontSize: 11, color: T.textMuted, marginTop: 2 }}>{e.expiry}</p>
+              </div>
+              <div style={{ padding: "6px 14px", borderRadius: T.radiusSm, background: T.greenSoft, color: T.green, fontSize: 13, fontWeight: 600, cursor: "pointer" }}>Claim</div>
             </div>
           ))}
         </Card>
