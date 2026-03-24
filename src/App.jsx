@@ -149,7 +149,12 @@ const ProgressRing = ({ progress, size = 48, stroke = 4, color = T.accent }) => 
 };
 
 // ─── HOME ────────────────────────────────────────────────────────
-const HomeScreen = ({ setScreen }) => (
+const HomeScreen = ({ setScreen }) => {
+  const hour = new Date().getHours();
+  const greeting = hour < 12 ? "Good morning" : hour < 17 ? "Good afternoon" : "Good evening";
+  const [dismissed, setDismissed] = useState([]);
+
+  return (
   <div style={{ padding: "0 20px 24px" }}>
     {/* Header */}
     <div className="s1" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", padding: "6px 0 24px" }}>
@@ -157,13 +162,18 @@ const HomeScreen = ({ setScreen }) => (
         <Icons.Help />
         <span style={{ fontSize: 14, fontWeight: 500, color: T.textSecondary }}>Help</span>
       </div>
-      <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-        <svg width="28" height="20" viewBox="0 0 40 28" fill={T.accent}><path d="M20 0c-3 0-5.5 4-7 8l-1.5 4c-1.2 2.5-3 4.5-6 5.5-2 .8-4 .5-5-.5 2.5 3.5 5.5 4.5 8.5 3 2.5-1 4-3 5.5-5.5l1-2.5c1-2.5 2.5-5 4.5-5s3.5 2.5 4.5 5l1 2.5c1.5 2.5 3 4.5 5.5 5.5 3 1.5 6 .5 8.5-3-1 1-3 1.3-5 .5-3-1-4.8-3-6-5.5L26.5 8C25 4 22.5 0 20 0z"/></svg>
-        <span style={{ fontSize: 15, fontWeight: 600, color: T.accent }}>Log in</span>
+      <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <span style={{ color: T.textMuted, position: "relative" }}>
+          <Icons.Bell />
+          <span style={{ position: "absolute", top: -2, right: -2, width: 8, height: 8, borderRadius: 4, background: T.accent, border: "2px solid #fff" }} />
+        </span>
+        <div style={{ width: 36, height: 36, borderRadius: 18, background: T.accentSoft, display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <span style={{ fontSize: 14, fontWeight: 700, color: T.accent }}>AJ</span>
+        </div>
       </div>
     </div>
 
-    <h1 className="s1" style={{ fontSize: 32, fontWeight: 700, color: T.text, fontFamily: fam }}>Hello</h1>
+    <h1 className="s1" style={{ fontSize: 32, fontWeight: 700, color: T.text, fontFamily: fam }}>{greeting}, Alex</h1>
 
     {/* Frequent Flyer CTA — matches Qantas style */}
     <Card className="s2" style={{ marginTop: 20, padding: "28px 24px", textAlign: "center" }}>
@@ -206,6 +216,10 @@ const HomeScreen = ({ setScreen }) => (
             </div>
           ))}
         </div>
+        <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 16, padding: "10px 14px", borderRadius: T.radiusSm, background: T.surfaceAlt }}>
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" style={{ color: T.blue, flexShrink: 0 }}><path d="M18 10h-1.26A8 8 0 109 20h9a5 5 0 000-10z"/></svg>
+          <span style={{ fontSize: 13, color: T.textSecondary }}>Tokyo · 14°C, partly cloudy</span>
+        </div>
       </div>
       <div onClick={() => setScreen("timeline")} style={{
         padding: "14px 20px", borderTop: `1px solid ${T.border}`,
@@ -232,24 +246,26 @@ const HomeScreen = ({ setScreen }) => (
           {[
             { icon: <Icons.Check />, label: "Check-in", status: "Complete", done: true },
             { icon: <Icons.Luggage />, label: "Baggage", status: "Added", done: true },
-            { icon: <Icons.Shield />, label: "Documents", status: "Review needed", done: false },
+            { icon: <Icons.Shield />, label: "Documents", status: "Review needed", done: false, urgent: true },
             { icon: <Icons.Droplet />, label: "Wellness", status: "Set up", done: false },
           ].map((item, i) => (
             <div key={i} style={{
               display: "flex", alignItems: "center", gap: 12, padding: "12px 14px",
-              borderRadius: T.radiusSm, background: "#F8F8FA",
+              borderRadius: T.radiusSm, background: item.urgent ? T.orangeSoft : T.surfaceAlt,
+              cursor: "pointer",
             }}>
               <div style={{
                 width: 30, height: 30, borderRadius: 15, flexShrink: 0,
-                background: item.done ? T.greenSoft : "#F0F0F2",
-                border: item.done ? "none" : "1.5px solid #D1D1D6",
+                background: item.done ? T.greenSoft : item.urgent ? T.orangeSoft : "#F0F0F2",
+                border: item.done ? "none" : `1.5px solid ${item.urgent ? T.orange : "#D1D1D6"}`,
                 display: "flex", alignItems: "center", justifyContent: "center",
-                color: item.done ? T.green : T.textDim,
+                color: item.done ? T.green : item.urgent ? T.orange : T.textDim,
               }}>{item.done ? <Icons.Check /> : item.icon}</div>
-              <div>
+              <div style={{ flex: 1 }}>
                 <p style={{ fontSize: 13, fontWeight: 600, color: T.text }}>{item.label}</p>
-                <p style={{ fontSize: 11, color: item.done ? T.green : T.textMuted, fontWeight: 500 }}>{item.status}</p>
+                <p style={{ fontSize: 11, color: item.done ? T.green : item.urgent ? T.orange : T.textMuted, fontWeight: 500 }}>{item.status}</p>
               </div>
+              <span style={{ color: T.textDim }}><Icons.Chevron /></span>
             </div>
           ))}
         </div>
@@ -263,10 +279,17 @@ const HomeScreen = ({ setScreen }) => (
         { icon: <Icons.Globe />, text: "Pack light layers — Tokyo is 14°C this week", color: T.blue, bg: T.blueSoft },
         { icon: <Icons.Sparkle />, text: "¥1 AUD = ¥97.2 JPY — rates are favourable", color: T.green, bg: T.greenSoft },
         { icon: <Icons.Leaf />, text: "Your flight emits 1.2t CO₂ — offset for $18", color: "#34C759", bg: T.greenSoft },
-      ].map((s, i) => (
+      ].filter((_, i) => !dismissed.includes(i)).map((s, i) => (
         <Card key={i} style={{ padding: "14px 16px", display: "flex", alignItems: "center", gap: 14, marginBottom: 10 }}>
           <div style={{ width: 38, height: 38, borderRadius: 19, flexShrink: 0, background: s.bg, display: "flex", alignItems: "center", justifyContent: "center", color: s.color }}>{s.icon}</div>
-          <p style={{ fontSize: 14, color: T.textSecondary, lineHeight: 1.45 }}>{s.text}</p>
+          <div style={{ flex: 1 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
+              <span style={{ color: T.accent }}><Icons.Sparkle /></span>
+              <span style={{ fontSize: 10, fontWeight: 600, color: T.accent, textTransform: "uppercase", letterSpacing: "0.04em" }}>AI Suggested</span>
+            </div>
+            <p style={{ fontSize: 14, color: T.textSecondary, lineHeight: 1.45 }}>{s.text}</p>
+          </div>
+          <span onClick={(e) => { e.stopPropagation(); setDismissed(prev => [...prev, i]); }} style={{ color: T.textDim, cursor: "pointer", padding: 8, fontSize: 16, lineHeight: 1 }}>✕</span>
         </Card>
       ))}
     </div>
@@ -295,9 +318,12 @@ const HomeScreen = ({ setScreen }) => (
     {/* Loyalty */}
     <Card className="s7" style={{ marginTop: 28, padding: 20, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
       <div>
-        <p style={{ fontSize: 11, color: T.textMuted, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.04em" }}>Qantas Points</p>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <p style={{ fontSize: 11, color: T.textMuted, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.04em" }}>Qantas Points</p>
+          <Pill color={T.wattle} style={{ fontSize: 10, fontWeight: 700 }}>Gold</Pill>
+        </div>
         <p style={{ fontSize: 24, fontWeight: 800, color: T.accent, marginTop: 4, fontFamily: fam }}>48,250</p>
-        <p style={{ fontSize: 13, color: T.textMuted, marginTop: 3 }}>Gold · 12 flights this year</p>
+        <p style={{ fontSize: 13, color: T.textMuted, marginTop: 3 }}>4,750 pts to Platinum</p>
       </div>
       <ProgressRing progress={68} />
     </Card>
@@ -316,7 +342,8 @@ const HomeScreen = ({ setScreen }) => (
       </div>
     </Card>
   </div>
-);
+  );
+};
 
 // ─── TIMELINE ────────────────────────────────────────────────────
 const TimelineScreen = ({ setScreen }) => {
