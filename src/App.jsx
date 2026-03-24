@@ -419,69 +419,122 @@ const TimelineScreen = ({ setScreen }) => {
 };
 
 // ─── BOARDING PASS ───────────────────────────────────────────────
-const BoardingScreen = () => (
-  <div style={{ padding: "0 20px 24px" }}>
-    <div className="s1" style={{ padding: "6px 0 20px" }}>
-      <h1 style={{ fontSize: 30, fontWeight: 700, color: T.text, fontFamily: fam }}>Boarding Pass</h1>
-    </div>
-    <Card className="s2" style={{ padding: 0, overflow: "hidden" }}>
-      <div style={{ padding: "24px 24px 20px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <Pill color={T.green}><span style={{ width: 6, height: 6, borderRadius: 3, background: T.green, display: "inline-block" }}/> Ready to board</Pill>
-          <p style={{ fontSize: 13, color: T.textMuted, fontWeight: 600, fontFamily: fontMono }}>QF 71</p>
-        </div>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 26 }}>
-          <div><p style={{ fontSize: 40, fontWeight: 800, color: T.text, fontFamily: fam, letterSpacing: "-0.03em" }}>ADL</p><p style={{ fontSize: 12, color: T.textMuted }}>Adelaide</p></div>
-          <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
-            <div style={{ width: "100%", height: 1, background: "#D1D1D6" }}/>
-            <div style={{ position: "absolute", background: T.accent, borderRadius: 20, padding: "5px 10px" }}><span style={{ color: "#fff" }}><Icons.Plane /></span></div>
+const BoardingScreen = () => {
+  const [countdown, setCountdown] = useState({ h: 2, m: 47, s: 13 });
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCountdown(prev => {
+        let { h, m, s } = prev;
+        s--;
+        if (s < 0) { s = 59; m--; }
+        if (m < 0) { m = 59; h--; }
+        if (h < 0) return { h: 0, m: 0, s: 0 };
+        return { h, m, s };
+      });
+    }, 1000);
+    return () => clearInterval(timer);
+  }, []);
+
+  const totalMin = countdown.h * 60 + countdown.m;
+  const boardingState = totalMin < 10 ? "final" : totalMin < 30 ? "boarding" : "waiting";
+  const stateLabel = boardingState === "final" ? "Final call" : boardingState === "boarding" ? "Now boarding · Group 2" : "Boarding begins in";
+  const stateColor = boardingState === "final" ? T.orange : boardingState === "boarding" ? T.green : T.accent;
+
+  return (
+    <div style={{ padding: "0 20px 24px" }}>
+      <div className="s1" style={{ padding: "6px 0 20px" }}>
+        <h1 style={{ fontSize: 30, fontWeight: 700, color: T.text, fontFamily: fam }}>Boarding Pass</h1>
+      </div>
+      <Card className="s2" style={{ padding: 0, overflow: "hidden", position: "relative" }}>
+        {/* Class indicator strip */}
+        <div style={{ height: 3, background: T.accent }}/>
+        {/* Kangaroo watermark */}
+        <svg width="120" height="80" viewBox="0 0 40 28" fill={T.accent} style={{ position: "absolute", right: 16, top: 40, opacity: 0.04 }}>
+          <path d="M20 0c-3 0-5.5 4-7 8l-1.5 4c-1.2 2.5-3 4.5-6 5.5-2 .8-4 .5-5-.5 2.5 3.5 5.5 4.5 8.5 3 2.5-1 4-3 5.5-5.5l1-2.5c1-2.5 2.5-5 4.5-5s3.5 2.5 4.5 5l1 2.5c1.5 2.5 3 4.5 5.5 5.5 3 1.5 6 .5 8.5-3-1 1-3 1.3-5 .5-3-1-4.8-3-6-5.5L26.5 8C25 4 22.5 0 20 0z"/>
+        </svg>
+        <div style={{ padding: "24px 24px 20px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <Pill color={T.green}><span style={{ width: 6, height: 6, borderRadius: 3, background: T.green, display: "inline-block" }}/> Ready to board</Pill>
+            <p style={{ fontSize: 13, color: T.textMuted, fontWeight: 600, fontFamily: fontMono }}>QF 71</p>
           </div>
-          <div style={{ textAlign: "right" }}><p style={{ fontSize: 40, fontWeight: 800, color: T.text, fontFamily: fam, letterSpacing: "-0.03em" }}>NRT</p><p style={{ fontSize: 12, color: T.textMuted }}>Tokyo Narita</p></div>
+          <div style={{ display: "flex", alignItems: "center", gap: 12, marginTop: 26 }}>
+            <div><p style={{ fontSize: 40, fontWeight: 800, color: T.text, fontFamily: fam, letterSpacing: "-0.03em" }}>ADL</p><p style={{ fontSize: 12, color: T.textMuted }}>Adelaide</p></div>
+            <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}>
+              <div style={{ width: "100%", height: 1, background: "#D1D1D6" }}/>
+              <div style={{ position: "absolute", background: T.accent, borderRadius: 20, padding: "5px 10px" }}><span style={{ color: "#fff" }}><Icons.Plane /></span></div>
+            </div>
+            <div style={{ textAlign: "right" }}><p style={{ fontSize: 40, fontWeight: 800, color: T.text, fontFamily: fam, letterSpacing: "-0.03em" }}>NRT</p><p style={{ fontSize: 12, color: T.textMuted }}>Tokyo Narita</p></div>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginTop: 28 }}>
+            {[{ l: "Date", v: "26 Mar" }, { l: "Departs", v: "06:15" }, { l: "Terminal", v: "T1" }, { l: "Gate", v: "14" }, { l: "Seat", v: "14A" }, { l: "Group", v: "2" }].map((d, i) => (
+              <div key={i}><p style={{ fontSize: 10, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 500 }}>{d.l}</p><p style={{ fontSize: 20, fontWeight: 700, color: T.text, marginTop: 4, fontFamily: ["Gate","Seat","Group","Terminal"].includes(d.l) ? fontMono : fam }}>{d.v}</p></div>
+            ))}
+          </div>
+          <div style={{ marginTop: 20, padding: "10px 14px", borderRadius: T.radiusSm, background: T.surfaceAlt, display: "flex", alignItems: "center", gap: 8 }}>
+            <span style={{ color: T.textSecondary }}><Icons.Luggage /></span>
+            <span style={{ fontSize: 12, color: T.textSecondary }}>1 × 23kg checked · 1 × 7kg cabin</span>
+          </div>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16, marginTop: 28 }}>
-          {[{ l: "Date", v: "26 Mar" }, { l: "Departs", v: "06:15" }, { l: "Arrives", v: "16:40" }, { l: "Gate", v: "14" }, { l: "Seat", v: "14A" }, { l: "Group", v: "2" }].map((d, i) => (
-            <div key={i}><p style={{ fontSize: 10, color: T.textMuted, textTransform: "uppercase", letterSpacing: "0.06em", fontWeight: 500 }}>{d.l}</p><p style={{ fontSize: 20, fontWeight: 700, color: T.text, marginTop: 4, fontFamily: ["Gate","Seat","Group"].includes(d.l) ? fontMono : fam }}>{d.v}</p></div>
+        {/* Tear line */}
+        <div style={{ position: "relative", height: 24, display: "flex", alignItems: "center" }}>
+          <div style={{ width: 24, height: 24, borderRadius: 12, background: T.bg, position: "absolute", left: -12 }}/>
+          <div style={{ flex: 1, borderTop: "2px dashed #E5E5EA", margin: "0 20px" }}/>
+          <div style={{ width: 24, height: 24, borderRadius: 12, background: T.bg, position: "absolute", right: -12 }}/>
+        </div>
+        {/* Passenger + QR */}
+        <div style={{ padding: "16px 24px 28px", textAlign: "center" }}>
+          <p style={{ fontSize: 16, fontWeight: 600, color: T.text }}>Alex Johnson</p>
+          <p style={{ fontSize: 12, color: T.textMuted, marginTop: 3 }}>Economy Plus · QF Gold · FF 1234567</p>
+          {/* QR code placeholder */}
+          <div style={{ display: "inline-grid", gridTemplateColumns: "repeat(11, 1fr)", gap: 2, padding: "20px 16px 0" }}>
+            {Array.from({ length: 121 }, (_, i) => {
+              const row = Math.floor(i / 11), col = i % 11;
+              const isCorner = (row < 3 && col < 3) || (row < 3 && col > 7) || (row > 7 && col < 3);
+              return <div key={i} style={{ width: 4, height: 4, background: T.text, opacity: isCorner ? 0.9 : Math.random() > 0.4 ? 0.7 : 0.15, borderRadius: 0.5 }}/>;
+            })}
+          </div>
+          <p style={{ fontSize: 10, fontFamily: fontMono, color: T.textDim, marginTop: 12, letterSpacing: "0.1em" }}>ETKT 081 2345678901</p>
+        </div>
+      </Card>
+
+      {/* Live countdown */}
+      <Card className="s3" style={{ marginTop: 16, padding: 22, textAlign: "center" }}>
+        <p style={{ fontSize: 11, color: stateColor, fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em" }}>{stateLabel}</p>
+        {boardingState === "waiting" && (
+          <div style={{ display: "flex", justifyContent: "center", gap: 24, marginTop: 14 }}>
+            {[{ v: String(countdown.h).padStart(2, "0"), l: "hrs" }, { v: String(countdown.m).padStart(2, "0"), l: "min" }, { v: String(countdown.s).padStart(2, "0"), l: "sec" }].map((t, i) => (
+              <div key={i}><p style={{ fontSize: 36, fontWeight: 800, color: stateColor, fontFamily: fontMono }}>{t.v}</p><p style={{ fontSize: 10, color: T.textMuted, marginTop: 2 }}>{t.l}</p></div>
+            ))}
+          </div>
+        )}
+      </Card>
+
+      {/* Seat amenities */}
+      <div className="s4" style={{ marginTop: 20 }}>
+        <SectionTitle>Seat amenities</SectionTitle>
+        <div style={{ display: "flex", gap: 8 }}>
+          {[{ icon: <Icons.Wifi />, l: "Wi-Fi" }, { icon: <Icons.Zap />, l: "Power" }, { icon: <Icons.Coffee />, l: "Meals" }, { icon: <Icons.Star />, l: "Extra leg" }].map((a, i) => (
+            <Card key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, padding: "16px 8px" }}>
+              <span style={{ color: T.accent }}>{a.icon}</span>
+              <p style={{ fontSize: 11, color: T.textMuted, fontWeight: 500 }}>{a.l}</p>
+            </Card>
           ))}
         </div>
       </div>
-      <div style={{ position: "relative", height: 24, display: "flex", alignItems: "center" }}>
-        <div style={{ width: 24, height: 24, borderRadius: 12, background: T.bg, position: "absolute", left: -12 }}/>
-        <div style={{ flex: 1, borderTop: "2px dashed #E5E5EA", margin: "0 20px" }}/>
-        <div style={{ width: 24, height: 24, borderRadius: 12, background: T.bg, position: "absolute", right: -12 }}/>
-      </div>
-      <div style={{ padding: "16px 24px 28px", textAlign: "center" }}>
-        <p style={{ fontSize: 16, fontWeight: 600, color: T.text }}>Alex Johnson</p>
-        <p style={{ fontSize: 12, color: T.textMuted, marginTop: 3 }}>Economy Plus</p>
-        <div style={{ display: "flex", justifyContent: "center", gap: 2, padding: "18px 16px 0" }}>
-          {Array.from({ length: 40 }, (_, i) => <div key={i} style={{ width: Math.random() > 0.5 ? 3 : 2, height: 52, background: T.text, opacity: Math.random() * 0.35 + 0.1, borderRadius: 1 }}/>)}
-        </div>
-        <p style={{ fontSize: 10, fontFamily: fontMono, color: T.textDim, marginTop: 12, letterSpacing: "0.1em" }}>ETKT 081 2345678901</p>
-      </div>
-    </Card>
-    <Card className="s3" style={{ marginTop: 16, padding: 22, textAlign: "center" }}>
-      <p style={{ fontSize: 11, color: T.textMuted, fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.06em" }}>Boarding begins in</p>
-      <div style={{ display: "flex", justifyContent: "center", gap: 24, marginTop: 14 }}>
-        {[{ v: "02", l: "hrs" }, { v: "47", l: "min" }, { v: "13", l: "sec" }].map((t, i) => (
-          <div key={i}><p style={{ fontSize: 36, fontWeight: 800, color: T.accent, fontFamily: fontMono, animation: `countUp 0.5s ease both ${0.1*i}s` }}>{t.v}</p><p style={{ fontSize: 10, color: T.textMuted, marginTop: 2 }}>{t.l}</p></div>
-        ))}
-      </div>
-    </Card>
-    <div className="s4" style={{ marginTop: 20 }}>
-      <SectionTitle>Seat amenities</SectionTitle>
-      <div style={{ display: "flex", gap: 8 }}>
-        {[{ icon: <Icons.Wifi />, l: "Wi-Fi" }, { icon: <Icons.Zap />, l: "Power" }, { icon: <Icons.Coffee />, l: "Meals" }, { icon: <Icons.Star />, l: "Extra leg" }].map((a, i) => (
-          <Card key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, padding: "16px 8px" }}>
-            <span style={{ color: T.accent }}>{a.icon}</span>
-            <p style={{ fontSize: 11, color: T.textMuted, fontWeight: 500 }}>{a.l}</p>
-          </Card>
-        ))}
+
+      {/* Wallet buttons */}
+      <div className="s5" style={{ display: "flex", gap: 10, marginTop: 20 }}>
+        <button style={{ flex: 1, padding: "16px", height: 56, borderRadius: T.radius, border: "none", background: T.accent, color: "#fff", fontSize: 17, fontWeight: 500, fontFamily: fam, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
+          Add to Wallet
+        </button>
+        <button style={{ padding: "16px 20px", height: 56, borderRadius: T.radius, border: `1.5px solid ${T.border}`, background: T.card, color: T.textSecondary, fontSize: 14, fontWeight: 500, fontFamily: fam, cursor: "pointer" }}>
+          Share
+        </button>
       </div>
     </div>
-    <button className="s5" style={{ width: "100%", marginTop: 20, padding: "16px", borderRadius: T.radiusSm, border: "none", background: T.accent, color: "#fff", fontSize: 16, fontWeight: 600, fontFamily: fam, cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-      Add to Wallet <Icons.ArrowRight />
-    </button>
-  </div>
-);
+  );
+};
 
 // ─── MAP ─────────────────────────────────────────────────────────
 const MapScreen = () => {
