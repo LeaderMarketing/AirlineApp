@@ -1,4 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
+import fontLight from "./assets/fonts/QantasSans-Light.woff2";
+import fontRegular from "./assets/fonts/QantasSans-Regular.woff2";
+import fontMedium from "./assets/fonts/QantasSans-Medium.woff2";
+import fontBold from "./assets/fonts/QantasSans-Bold.woff2";
 
 // ─── QANTAS-INSPIRED DESIGN TOKENS ──────────────────────────────
 const T = {
@@ -72,25 +76,25 @@ const Icons = {
 const animCSS = `
 @font-face {
   font-family: 'Qantas Sans';
-  src: url('https://www.qantas.com/fonts/QantasSans-Light.woff2') format('woff2');
+  src: url('${fontLight}') format('woff2');
   font-weight: 300;
   font-display: swap;
 }
 @font-face {
   font-family: 'Qantas Sans';
-  src: url('https://www.qantas.com/fonts/QantasSans-Regular.woff2') format('woff2');
+  src: url('${fontRegular}') format('woff2');
   font-weight: 400;
   font-display: swap;
 }
 @font-face {
   font-family: 'Qantas Sans';
-  src: url('https://www.qantas.com/fonts/QantasSans-Medium.woff2') format('woff2');
+  src: url('${fontMedium}') format('woff2');
   font-weight: 500;
   font-display: swap;
 }
 @font-face {
   font-family: 'Qantas Sans';
-  src: url('https://www.qantas.com/fonts/QantasSans-Bold.woff2') format('woff2');
+  src: url('${fontBold}') format('woff2');
   font-weight: 700;
   font-display: swap;
 }
