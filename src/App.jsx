@@ -319,10 +319,10 @@ const HomeScreen = ({ setScreen }) => {
       <SectionTitle>Book and explore</SectionTitle>
       <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 12 }}>
         {[
-          { icon: <QantasIcon name="runway_pictogram_boarding_pass" size={28} />, label: "Boarding\nPass", screen: "boarding" },
-          { icon: <QantasIcon name="runway_pictogram_location" size={28} />, label: "Airport\nMap", screen: "map" },
-          { icon: <QantasIcon name="runway_pictogram_group" size={28} />, label: "Travel\nGroup", screen: null },
-          { icon: <QantasIcon name="runway_pictogram_world_map_with_destinations" size={28} />, label: "Trip\nWrap", screen: "wrap" },
+          { icon: <QantasIcon name="runway_icon_boarding_pass" size={28} />, label: "Boarding\nPass", screen: "boarding" },
+          { icon: <QantasIcon name="runway_icon_pin" size={28} />, label: "Airport\nMap", screen: "map" },
+          { icon: <QantasIcon name="runway_icon_people" size={28} />, label: "Travel\nGroup", screen: null },
+          { icon: <QantasIcon name="runway_icon_world" size={28} />, label: "Trip\nWrap", screen: "wrap" },
         ].map((a, i) => (
           <Card key={i} onClick={() => a.screen && setScreen(a.screen)} style={{
             display: "flex", flexDirection: "column", alignItems: "center",
@@ -532,9 +532,9 @@ const BoardingScreen = () => {
       <div className="s4" style={{ marginTop: 20 }}>
         <SectionTitle>Seat amenities</SectionTitle>
         <div style={{ display: "flex", gap: 8 }}>
-          {[{ icon: <QantasIcon name="runway_pictogram_wifi" size={22} />, l: "Wi-Fi" }, { icon: <QantasIcon name="runway_pictogram_power" size={22} />, l: "Power" }, { icon: <QantasIcon name="runway_pictogram_meal" size={22} />, l: "Meals" }, { icon: <QantasIcon name="runway_pictogram_seat" size={22} />, l: "Extra leg" }].map((a, i) => (
+          {[{ icon: <Icons.Wifi />, l: "Wi-Fi" }, { icon: <Icons.Zap />, l: "Power" }, { icon: <Icons.Coffee />, l: "Meals" }, { icon: <Icons.Star />, l: "Extra leg" }].map((a, i) => (
             <Card key={i} style={{ flex: 1, display: "flex", flexDirection: "column", alignItems: "center", gap: 8, padding: "16px 8px" }}>
-              {a.icon}
+              <span style={{ color: T.accent }}>{a.icon}</span>
               <p style={{ fontSize: 11, color: T.textMuted, fontWeight: 500 }}>{a.l}</p>
             </Card>
           ))}
@@ -559,12 +559,12 @@ const MapScreen = () => {
   const [sel, setSel] = useState(null);
   const [filter, setFilter] = useState("All");
   const pois = [
-    { id: 1, x: 82, y: 28, label: "Gate 14", desc: "Your gate · 6 min walk", color: T.accent, icon: <QantasIcon name="runway_pictogram_plane_tail_red" size={14} />, walk: "6 min", category: "Gates" },
-    { id: 2, x: 58, y: 24, label: "Qantas Lounge", desc: "Level 1 · Gold access", color: T.purple, icon: <QantasIcon name="runway_pictogram_lounge" size={14} />, walk: "4 min", category: "Lounges" },
-    { id: 3, x: 42, y: 36, label: "Cafe & Bar", desc: "Coffee, snacks · Open", color: T.green, icon: <QantasIcon name="runway_pictogram_meal" size={14} />, walk: "2 min", category: "Food" },
-    { id: 4, x: 70, y: 48, label: "Charging Hub", desc: "USB-C + wireless", color: T.blue, icon: <QantasIcon name="runway_pictogram_power" size={14} />, walk: "5 min", category: "Charging" },
-    { id: 5, x: 14, y: 48, label: "Security", desc: "~8 min current wait", color: T.orange, icon: <QantasIcon name="runway_pictogram_security" size={14} />, walk: "1 min", category: "Other" },
-    { id: 6, x: 52, y: 62, label: "Duty Free", desc: "Open until 05:45", color: T.wattle, icon: <QantasIcon name="runway_pictogram_shopping" size={14} />, walk: "3 min", category: "Other" },
+    { id: 1, x: 82, y: 28, label: "Gate 14", desc: "Your gate · 6 min walk", color: T.accent, icon: <Icons.Plane />, walk: "6 min", category: "Gates" },
+    { id: 2, x: 58, y: 24, label: "Qantas Lounge", desc: "Level 1 · Gold access", color: T.purple, icon: <QantasIcon name="runway_icon_star" size={14} />, walk: "4 min", category: "Lounges" },
+    { id: 3, x: 42, y: 36, label: "Cafe & Bar", desc: "Coffee, snacks · Open", color: T.green, icon: <Icons.Coffee />, walk: "2 min", category: "Food" },
+    { id: 4, x: 70, y: 48, label: "Charging Hub", desc: "USB-C + wireless", color: T.blue, icon: <Icons.Zap />, walk: "5 min", category: "Charging" },
+    { id: 5, x: 14, y: 48, label: "Security", desc: "~8 min current wait", color: T.orange, icon: <Icons.Shield />, walk: "1 min", category: "Other" },
+    { id: 6, x: 52, y: 62, label: "Duty Free", desc: "Open until 05:45", color: T.wattle, icon: <QantasIcon name="runway_icon_globe" size={14} />, walk: "3 min", category: "Other" },
   ];
   const filteredPois = filter === "All" ? pois : pois.filter(p => p.category === filter);
   const filterCounts = { "Gates": pois.filter(p => p.category === "Gates").length, "Food": pois.filter(p => p.category === "Food").length, "Lounges": pois.filter(p => p.category === "Lounges").length, "Charging": pois.filter(p => p.category === "Charging").length };
